@@ -1,0 +1,16 @@
+{
+  "name": "心梗·脑梗知识图谱",
+  "short_name": "心脑急救",
+  "description": "早识别、快急救、防复发：基于最新国际与中国指南的心梗与脑卒中知识图谱。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f5f2",
+  "theme_color": "#c8102e",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml"}
+  ]
+}
