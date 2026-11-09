@@ -370,7 +370,7 @@ function renderHome(){
   const counts = {}; NODES.forEach(n => counts[n.c]=(counts[n.c]||0)+1);
   $("#v-home").innerHTML = `
   <a class="sos-banner" href="#/sos">
-    <div><div class="big">胸痛不缓解？口角歪斜、手臂无力？</div><div class="sub">立即拨打 120 · 打开一键急救指引</div></div><span class="go" aria-hidden="true">›</span>
+    <div><div class="big">胸痛不缓解？口角歪斜、手臂无力？</div><div class="sub">立即拨打当地急救电话 · 打开一键急救指引</div></div><span class="go" aria-hidden="true">›</span>
   </a>
   <div class="hero">
     <p class="eyebrow">时间就是心肌 · 时间就是大脑</p>
@@ -379,7 +379,6 @@ function renderHome(){
   </div>
   <div class="stats">
     <div class="stat"><b>190万</b><span>大血管闭塞时，每分钟死亡的神经元</span></div>
-    <div class="stat"><b>≤90 分钟</b><span>心梗：首次医疗接触到开通血管</span></div>
     <div class="stat"><b>4.5 小时</b><span>脑梗：静脉溶栓的标准时间窗</span></div>
     <div class="stat"><b>24 小时</b><span>脑梗：影像筛选后取栓的时间窗</span></div>
   </div>
@@ -412,8 +411,8 @@ function renderHome(){
     <p>内容核对：${REVIEWED}。主要依据：2026 AHA/ASA 急性缺血性卒中指南、2025 ACC/AHA 急性冠脉综合征指南、2025 AHA/ACC 高血压指南、2023 ESC 急性冠脉综合征指南、2024 ESC 房颤/慢性冠脉综合征/高血压指南、2025 ESC/EAS 血脂更新、《中国急性缺血性卒中诊治指南2023》。</p>
   </div>`;
   const TL = {
-    mi: [["0 分钟","出现胸痛或胸闷，持续超过5分钟","--c-sign"],["立即","拨打120，停止活动；在指导下嚼服阿司匹林","--c-aid"],["≤10 分钟","完成首份12导联心电图","--c-mi"],["≤90 分钟","STEMI：导丝通过、开通血管（需转运时≤120分钟）","--c-mi"],["≤10 分钟","预计无法及时PCI时：从诊断到开始溶栓","--c-mi"],["出院前","双抗、强化降脂、心脏康复转诊","--c-prev"]],
-    st: [["0 分钟","突发面瘫、肢体无力、言语不清；记下最后正常时间","--c-sign"],["立即","拨打120，不要喂水喂药","--c-aid"],["≤20–25 分钟","到院后开始CT/CTA检查","--c-st"],["≤60 分钟","到院至溶栓（4.5小时时间窗内），先进中心≤30–45分钟","--c-st"],["≤24 小时","大血管闭塞：影像筛选后取栓","--c-st"],["住院期间","病因评估、二级预防、早期康复","--c-prev"]]
+    mi: [["0 分钟","出现胸痛或胸闷，持续超过5分钟","--c-sign"],["立即","拨打当地急救电话，停止活动；在指导下嚼服阿司匹林","--c-aid"],["出院前","双抗、强化降脂、心脏康复转诊","--c-prev"]],
+    st: [["0 分钟","突发面瘫、肢体无力、言语不清；记下最后正常时间","--c-sign"],["立即","拨打当地急救电话，不要喂水喂药","--c-aid"],["≤24 小时","大血管闭塞：影像筛选后取栓","--c-st"],["住院期间","病因评估、二级预防、早期康复","--c-prev"]]
   };
   const tl = k => { $("#tlBody").innerHTML = `<ul class="timeline">${TL[k].map(([t,d,c])=>`<li style="--dot:var(${c})"><b>${t}</b><br><span class="muted small">${d}</span></li>`).join("")}</ul>
     <p style="margin:12px 0 0"><a href="#/k/${k==="mi"?"pci":"ivt"}">了解${k==="mi"?"直接PCI":"静脉溶栓"} →</a></p>`; };
@@ -639,8 +638,10 @@ let sosTab = "mi", tick = null;
 function renderSOS(){
   $("#v-sos").innerHTML = `
   <h2 style="margin-top:12px" class="sr">急救</h2>
-  <a class="call" href="tel:120">${ICON.phone}拨打 120</a>
+  <h2 class="sr">拨打当地急救电话</h2>
+  <a class="call" href="tel:120">${ICON.phone}中国大陆 120</a>
   <div class="other-nums"><a href="tel:999">香港 999</a><a href="tel:119">台湾 119</a><a href="tel:911">美加 911</a><a href="tel:112">欧盟 112</a><a href="tel:999">英国 999</a><a href="tel:000">澳洲 000</a></div>
+  <p class="small muted" style="margin:10px 0 0;text-align:center">拨打当地急救电话。出处：<a href="https://www.gov.cn/zhengce/2013-11/29/content_5713800.htm" target="_blank" rel="noopener">中国大陆 120（《院前医疗急救管理办法》第十三条，中国政府网）</a> · <a href="https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-call-999/" target="_blank" rel="noopener">英国 999（NHS）</a> · <a href="https://www.hkfsd.gov.hk/chi/source/safety/Ambulance_Services_in_HK_chi.pdf" target="_blank" rel="noopener">香港 999（香港消防处）</a> · <a href="https://www.nfa.gov.tw/cht/index.php?code=list&ids=66" target="_blank" rel="noopener">台湾 119（内政部消防署）</a> · <a href="https://www.fcc.gov/node/25869" target="_blank" rel="noopener">美加 911（FCC）</a> · <a href="https://www.salute.gov.it/new/en/tema/112-118-e-pronto-soccorso/single-european-emergency-number-call-112" target="_blank" rel="noopener">欧盟 112（意大利卫生部）</a> · <a href="https://www.infrastructure.gov.au/media-communications/phone/triple-zero/how-call-triple-zero-000" target="_blank" rel="noopener">澳洲 000（澳洲基础设施部）</a>。中国大陆以外请拨当地急救电话。</p>
 
   <h2>⏱ 记录发病时间</h2>
   <div class="card timer" id="timer"></div>
@@ -652,7 +653,7 @@ function renderSOS(){
     <button role="tab" data-s="ca">倒地无反应</button>
   </div>
   <div id="sosBody" style="margin-top:12px"></div>
-  <p class="note foot">本页面不能代替急救调度员的指导，请按 120 调度员的指示操作。</p>`;
+  <p class="note foot">本页面不能代替急救调度员的指导，请按急救调度员的指示操作。</p>`;
   $("#sosTabs").onclick = e => { const b=e.target.closest("button"); if(!b) return; sosTab=b.dataset.s; drawSOS(); };
   drawTimer(); drawSOS();
 }
@@ -693,10 +694,8 @@ function drawSOS(){
       <li>伴冷汗、气短、恶心、头晕、濒死感</li>
       <li>女性、老人、糖尿病患者可能只有气短、乏力、恶心</li></ul></div>
     <div class="card" style="margin-top:12px"><h3>立即这样做</h3><ol class="steps red">
-      <li><b>拨打 120</b>。不要自己开车，也不要打车。</li>
+      <li><b>拨打当地急救电话（中国大陆 120、英国 999、香港 999）</b>。不要自己开车，也不要打车。</li>
       <li>停止一切活动，<b>坐下或半卧</b>，松开衣领。</li>
-      <li>如果没有过敏和出血，可以在调度员指导下<b>嚼服阿司匹林</b> 150–300 mg。</li>
-      <li>如果之前开过硝酸甘油，并且血压不低，可以舌下含服 1 片。</li>
       <li>准备好药盒和病历，打开门，把电梯和通道留出来。</li>
       <li>如果患者<b>倒地无反应</b> → 切换到“倒地无反应”，开始心肺复苏。</li></ol>
       <p style="margin:10px 0 0"><a href="#/k/mi-sx">心梗症状详解 →</a>　<a href="#/k/aspirin">阿司匹林怎么用 →</a></p></div>`;
@@ -704,11 +703,11 @@ function drawSOS(){
     <div class="card"><h3>BE FAST：任何一项突然出现</h3>
       <div class="fast">
         <div><b>B</b><span>平衡：突然走不稳、眩晕</span></div><div><b>E</b><span>眼睛：突然看不清、视野缺损</span></div><div><b>F</b><span>面部：口角歪斜</span></div>
-        <div><b>A</b><span>手臂：一侧无力，平举后下垂</span></div><div><b>S</b><span>言语：说话含糊、听不懂</span></div><div><b>T</b><span>时间：马上打 120</span></div>
+        <div><b>A</b><span>手臂：一侧无力，平举后下垂</span></div><div><b>S</b><span>言语：说话含糊、听不懂</span></div><div><b>T</b><span>时间：马上拨打当地急救电话</span></div>
       </div>
-      <p class="small muted" style="margin:10px 0 0">中风120：<b>1</b> 看 1 张脸 · <b>2</b> 查 2 只胳膊 · <b>0</b> 聆（零）听语言</p></div>
+      <p class="small muted" style="margin:10px 0 0">中风120：<b>1</b> 看 1 张脸 · <b>2</b> 查 2 只胳膊 · <b>0</b> 聆（零）听语言。中国大陆以外请拨当地急救电话。</p></div>
     <div class="card" style="margin-top:12px"><h3>立即这样做</h3><ol class="steps red">
-      <li><b>拨打 120</b>，说明“疑似卒中”。</li>
+      <li><b>拨打当地急救电话（中国大陆 120、英国 999、香港 999）</b>，说明“疑似卒中”。</li>
       <li>在上方<b>记录最后正常的时间</b>。如果是醒来后发现的，就记入睡时间。</li>
       <li>让患者平卧或侧卧（呕吐时一定要侧卧），头稍抬高。</li>
       <li>找出正在吃的药，<b>尤其是抗凝药</b>，以及最后一次服药的时间。</li></ol></div>
@@ -722,7 +721,7 @@ function drawSOS(){
     B.innerHTML = `
     <div class="card"><h3>心肺复苏（成人）</h3><ol class="steps red">
       <li>确认环境安全，拍打双肩并大声呼喊。</li>
-      <li>没有反应，也没有正常呼吸（或只有叹气样喘息）→ <b>拨打 120 并开免提</b>，让旁人去取 <b>AED</b>。</li>
+      <li>没有反应，也没有正常呼吸（或只有叹气样喘息）→ <b>拨打当地急救电话（中国大陆 120、英国 999、香港 999）并开免提</b>，让旁人去取 <b>AED</b>。</li>
       <li>双手掌根叠放在<b>胸部正中</b>，双臂伸直，垂直向下按压。</li>
       <li>按压深度 <b>5–6 cm</b>，频率 <b>100–120 次/分</b>。每次按压后让胸廓完全回弹，尽量不要中断。</li>
       <li>AED 一到立即打开，按语音提示贴电极片、电击，然后马上继续按压。</li></ol></div>
