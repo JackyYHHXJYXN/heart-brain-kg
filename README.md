@@ -33,3 +33,11 @@ gh api -X POST repos/{owner}/heart-brain-kg/pages -f "source[branch]=main" -f "s
 ## 免责声明
 
 仅供健康科普，不能替代医生诊疗。内容核对时间：2026-11。
+
+## 许可 / License
+- 内容（data.js 中的文字，以及 index.html 中的文字内容）：CC BY-NC-ND 4.0，见 LICENSE-CONTENT。可署名、原样、非商业转载；不得改编后发布。商业使用请另行联系授权。
+- 代码（sw.js，以及 index.html 中的脚本与样式）：MIT，见 LICENSE。
+- 页面引用的指南、机构资料和官方电话出处归各自权利人所有，不在上述许可范围内。
+- 本项目为源码公开、内容非商业许可，不属于 OSI 定义的开源项目。
+
+Content: CC BY-NC-ND 4.0. Code: MIT. Cited third-party sources remain with their owners.
