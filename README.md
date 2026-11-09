@@ -4,7 +4,8 @@
 
 - 48 个知识点、8 大模块：每条都有详细解释、关键数字、要点、常见误区、关联知识、权威文献（DOI/官网），以及 B站/YouTube 视频链接
 - 关系探索图谱 + 全景图谱（支持双指缩放）
-- 一键急救：拨打 120、记录发病时间（附时间窗提示）、心梗/卒中/心脏骤停分步指引、CPR 按压节拍器
+- 一键急救：拨打当地急救电话（中国大陆 120、英国 999、香港 999）、记录发病时间（附时间窗提示）、心梗/卒中/心脏骤停分步指引、CPR 按压节拍器
+  出处：中国大陆 120——[《院前医疗急救管理办法》第十三条](https://www.gov.cn/zhengce/2013-11/29/content_5713800.htm)（[国家卫健委 PDF 备用](https://www.nhc.gov.cn/wjw/c100221/202201/26ea3c97e82d466f9aa2b4a9901ae187/files/cd0981051e7a43c393a64abac3e7fe14.pdf)）；英国 999——[NHS](https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-call-999/)；香港 999——[香港消防处](https://www.hkfsd.gov.hk/chi/source/safety/Ambulance_Services_in_HK_chi.pdf)
 - ABCD² 和 CHA₂DS₂-VA 自测
 - 大字号、深色模式，可离线（PWA），可“添加到主屏幕”
 - 每个知识点都有独立链接（如 `#/k/ivt`），可直接分享
