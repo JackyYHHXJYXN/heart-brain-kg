@@ -347,7 +347,7 @@
     {
       id: "call120", c: "aid", t: "立即呼叫急救，不要自己去医院", en: "Call Emergency Services",
       s: "救护车能提前传心电图、预通知医院，并在途中处理心脏骤停。",
-      n: [["120", "中国大陆急救电话（出处：中国政府网，第十三条）"], ["999", "英国急救电话（出处：NHS）"], ["999", "香港急救电话（出处：香港消防处）"], ["119", "台湾急救电话（出处：内政部消防署）"], ["112", "欧盟统一紧急号码（出处：意大利卫生部）"], ["911", "美国/加拿大急救电话（出处：FCC）"], ["000", "澳洲急救电话（出处：澳洲基础设施部）"]],
+      n: [["120", "中国大陆急救电话（出处：中国政府网，第十三条）"], ["999", "英国急救电话（出处：NHS）"], ["999", "香港急救电话（出处：香港消防处）"], ["119", "台湾急救电话（出处：内政部消防署）"], ["112", "欧盟统一紧急号码（出处：意大利卫生部 / 欧盟委员会）"], ["911", "美国/加拿大急救电话（出处：美国国家 911 项目 / 加拿大 CRTC）"], ["000", "澳洲急救电话（出处：澳洲基础设施部）"]],
       d: [
         "很多人觉得打车或自己开车更快，但事实相反。急救人员可以在现场做心电图并远程传给胸痛中心，提前启动导管室，让患者“绕过急诊直达导管室”；对卒中患者，可以提前通知卒中中心，让CT和溶栓团队在门口等候。",
         "心梗早期最大的危险是室颤导致的心脏骤停，救护车上有除颤器，而出租车上没有。卒中患者可能出现呕吐误吸、意识下降，也需要专业监护。",
@@ -362,7 +362,9 @@
         ["香港救護服務 - 香港消防處（香港 999）", "https://www.hkfsd.gov.hk/chi/source/safety/Ambulance_Services_in_HK_chi.pdf", "香港消防處"],
         ["119、112 - 內政部消防署（台灣 119）", "https://www.nfa.gov.tw/cht/index.php?code=list&ids=66", "內政部消防署"],
         ["Single European emergency number 112 - 意大利卫生部（欧盟 112）", "https://www.salute.gov.it/new/en/tema/112-118-e-pronto-soccorso/single-european-emergency-number-call-112", "意大利卫生部"],
-        ["9-1-1 - FCC（美国/加拿大 911）", "https://www.fcc.gov/node/25869", "FCC"],
+        ["9-1-1 - 美国国家 911 项目（美国 911）", "https://www.911.gov/calling-911", "美国国家 911 项目（NHTSA）"],
+        ["9-1-1 - CRTC（加拿大 911）", "https://crtc.gc.ca/eng/phone/911/can.htm", "加拿大广播电视和电信委员会 CRTC"],
+        ["112 - 欧盟委员会（欧盟 112）", "https://digital-strategy.ec.europa.eu/en/policies/112", "欧盟委员会 · 112"],
         ["How to call Triple Zero (000) - 澳洲基础设施部（澳洲 000）", "https://www.infrastructure.gov.au/media-communications/phone/triple-zero/how-call-triple-zero-000", "澳洲基础设施部"],
         ["AHA：Heart attack and stroke — call 911", "https://www.heart.org/en/health-topics/heart-attack/warning-signs-of-a-heart-attack", "美国心脏协会"],
         ["2026 AHA/ASA 急性缺血性卒中指南（院前系统与移动卒中单元）", doi("10.1161/STR.0000000000000513"), "Stroke 2026"],
