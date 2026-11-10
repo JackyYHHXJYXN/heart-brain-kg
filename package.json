@@ -1,0 +1,6 @@
+{
+  "name": "medical-kg",
+  "private": true,
+  "description": "医学知识图谱合集。站点本身无需构建；此文件仅用于生成二维码的开发依赖。",
+  "devDependencies": { "qrcode": "1.5.4" }
+}
