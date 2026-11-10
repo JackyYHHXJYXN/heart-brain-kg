@@ -100,10 +100,10 @@ if (/^#\/./.test(location.hash)) location.replace("stroke-mi/" + location.hash);
   $("#how").innerHTML = [
     ["依据指南，每条附出处", "依据美国、欧洲与中国最新指南整理，每个知识点至少附 1 条可以点开核对的权威出处。"],
     ["如实标注审核状态", "内容由 AI 辅助整理。急救、用药等重点条目尚未经执业医师署名审核，页面会标出“待医生审核”。"],
-    ["无广告、无追踪", "不放广告，不用 cookie 和统计脚本，不收集个人信息。阅读进度只保存在你自己的手机上。"],
+    ["无广告、不设 cookie", "不放广告，不用 cookie 和统计脚本，本站页面不收集个人信息。阅读进度只保存在你自己的手机上。"],
     ["定期复核", "每半年按清单复核一次；有新指南时更新对应内容，并写明指南版本年份。"]
   ].map(function(x){ return '<li>' + IC("check") + '<div><b>' + x[0] + '</b><span>' + x[1] + '</span></div></li>'; }).join("");
-  if (SITE.feedbackUrl) $("#foot").insertAdjacentHTML("beforeend", '<p><a href="' + esc(SITE.feedbackUrl) + '" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p>');
+  if (SITE.feedbackUrl) $("#foot").insertAdjacentHTML("beforeend", '<p><a href="' + esc(SITE.feedbackUrl) + '" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p><p class="note">反馈会跳转到腾讯问卷（第三方网站，适用其隐私政策）。请勿填写姓名、电话、病历等个人信息。</p>');
 
   /* 全站搜索：索引由 node tools/validate.mjs 生成，第一次输入时才加载（不拖慢首屏） */
   var q = $("#gq"), loading = false;

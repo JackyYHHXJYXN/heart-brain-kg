@@ -46,7 +46,7 @@ function reviewFlag(id){
 function siteFoot(){
   return `<div class="foot note site-foot">
     <p>本站内容依据所列指南整理，每条附出处；由 AI 辅助整理${(RV.A||[]).length ? "。急救、用药等重点条目尚未经医生署名审核，请以医生意见为准" : ""}。</p>
-    ${SITE.feedbackUrl ? `<p><a href="${esc(SITE.feedbackUrl)}" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p>` : ""}
+    ${SITE.feedbackUrl ? `<p><a href="${esc(SITE.feedbackUrl)}" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p><p class="note">反馈会跳转到腾讯问卷（第三方网站，适用其隐私政策）。请勿填写姓名、电话、病历等个人信息。</p>` : ""}
     <p><a href="../">← 全部知识图谱</a></p>
   </div>`;
 }

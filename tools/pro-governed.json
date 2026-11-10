@@ -1,7 +1,5 @@
 {
   "_说明": "受专业库约束的图谱与分类（2026-11-03 Jacky 批准的合并方案）。这些分类里的知识点必须用 pro 字段关联 Medical-Diet-Graph 专业库的条目 id；图谱为 live 时，关联条目必须已签字、仍为现行版本，且 n（关键数字）里的数字都能在关联条目中找到。专业库索引：先在 Mac 终端运行 cd ~/Claude-Workspace/Medical-Diet-Graph && python3 -B _build/export_pro_index.py",
   "index": "private/pro_index.json",
-  "graphs": {
-    "metabolism": { "cats": ["glu", "lip"] }
-  }
+  "graphs": {}
 }

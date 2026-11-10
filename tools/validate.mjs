@@ -146,7 +146,9 @@ function checkPro(r, NODES) {
   const site = loadJson("site-config.json") || {}, fb = site.feedbackUrl || "";
   if (fb && !/^https:\/\//.test(fb)) err("site", `feedbackUrl 不是 https: ${fb}`);
   const review = {};
+  const publicIds = new Set(registry.filter(r => r.status === "live").map(r => r.id)); // 只输出已发布（live）图谱，draft/soon 不进公开文件
   for (const [gid, t] of Object.entries(TIERS.graphs || {})) {
+    if (!publicIds.has(gid)) continue;
     const signed = {};
     for (const x of t.A || []) if (isSigned(gid, x)) { const v = REVIEWS[gid][x]; signed[x] = { by: v.by, on: v.on }; }
     review[gid] = { A: t.A || [], signed };
@@ -168,7 +170,7 @@ function checkPro(r, NODES) {
 }
 // 生成 shared/search-index.js（合集首页的全站搜索；字段：图谱id, 知识点id, 标题, 英文名, 摘要, 分类名, 要点）
 {
-  const titles = Object.fromEntries(registry.map(r => [r.id, r.title]));
+  const titles = Object.fromEntries(registry.filter(r => r.status === "live").map(r => [r.id, r.title]));
   const out = "/* 自动生成：node tools/validate.mjs。不要手改。只含 live 图谱 */\nwindow.KG_SEARCH = " + JSON.stringify({ graphs: titles, rows: SEARCH }) + ";\n";
   const f = path.join(root, "shared", "search-index.js"), old = fs.existsSync(f) ? fs.readFileSync(f, "utf8") : "";
   if (old !== out) { fs.writeFileSync(f, out); console.log(`  已重新生成 shared/search-index.js（${SEARCH.length} 条）`); }

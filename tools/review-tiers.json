@@ -5,10 +5,6 @@
       "allowPendingA": true,
       "pages": ["sos"],
       "A": ["sos", "call120", "aspirin", "cpr", "aid-dont", "onset", "mi-sx", "mi-atyp", "befast", "s120", "tia", "ich", "abcd2", "chads", "ivt", "evt", "dapt", "sec-ap", "af-oac", "lipid-tx", "cardio-metab", "extra"]
-    },
-    "metabolism": {
-      "allowPendingA": false,
-      "A": ["hypo", "dka", "gdm", "t1d", "dmdrug", "lipdrug"]
     }
   }
 }
