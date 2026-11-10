@@ -32,7 +32,7 @@
   const NODES = [
     /* ───────────── 认识疾病 ───────────── */
     {
-      id: "as", c: "base", t: "动脉粥样硬化", en: "Atherosclerosis",
+      id: "as", uid: "stroke-mi/as", type: "condition", chk: "2026-11", c: "base", t: "动脉粥样硬化", en: "Atherosclerosis",
       s: "心梗和脑梗共同的“土壤”：血管壁里的脂质斑块。",
       n: [["~85%", "全球心血管死亡中由心梗和卒中导致的比例（WHO）"], ["LDL-C", "形成斑块的核心致病因素"]],
       d: [
@@ -51,7 +51,7 @@
       v: [["动脉粥样硬化如何形成（动画）", "动脉粥样硬化 斑块 形成 动画", "atherosclerosis plaque formation animation"]],
     },
     {
-      id: "acs", c: "base", t: "急性冠脉综合征与心肌梗死", en: "ACS / Myocardial Infarction",
+      id: "acs", uid: "stroke-mi/acs", type: "condition", chk: "2026-11", c: "base", t: "急性冠脉综合征与心肌梗死", en: "ACS / Myocardial Infarction",
       s: "冠状动脉急性闭塞导致心肌缺血坏死，分为STEMI、NSTEMI和不稳定型心绞痛。",
       n: [["20–40分钟", "冠脉完全闭塞后心肌开始不可逆坏死"], ["6小时", "大部分可挽救心肌在此时间内丢失"], ["5型", "第四版心梗全球定义的分型"]],
       d: [
@@ -71,7 +71,7 @@
       v: [["心肌梗死是怎么发生的", "心肌梗死 发生机制 动画", "myocardial infarction animation"], ["STEMI与NSTEMI的区别", "STEMI NSTEMI 区别", "STEMI vs NSTEMI explained"]],
     },
     {
-      id: "isch", c: "base", t: "缺血性卒中（脑梗死）", en: "Ischemic Stroke",
+      id: "isch", uid: "stroke-mi/isch", type: "condition", chk: "2026-11", c: "base", t: "缺血性卒中（脑梗死）", en: "Ischemic Stroke",
       s: "脑动脉堵塞导致脑组织缺血坏死，约占全部卒中的七成到八成。",
       n: [["190万", "大血管闭塞时每分钟约死亡的神经元数"], ["~70–80%", "缺血性卒中占全部卒中的比例（中国）"], ["第1位", "卒中是中国成人死亡和残疾的首要原因之一"]],
       d: [
@@ -90,7 +90,7 @@
       v: [["脑梗是怎么发生的", "脑梗死 缺血半暗带 科普", "ischemic stroke penumbra animation"]],
     },
     {
-      id: "ich", c: "base", t: "出血性卒中（脑出血/蛛网膜下腔出血）", en: "Hemorrhagic Stroke",
+      id: "ich", uid: "stroke-mi/ich", type: "condition", chk: "2026-11", c: "base", t: "出血性卒中（脑出血/蛛网膜下腔出血）", en: "Hemorrhagic Stroke",
       s: "脑血管破裂出血，病死率高于脑梗；突发“一生中最剧烈的头痛”要警惕。",
       n: [["~20–30%", "出血性卒中占卒中比例（中国高于欧美）"], ["数秒", "蛛网膜下腔出血的头痛在1分钟内达到顶峰（雷击样）"]],
       d: [
@@ -108,7 +108,7 @@
       v: [["脑出血与脑梗的区别", "脑出血 脑梗 区别 科普", "hemorrhagic vs ischemic stroke"]],
     },
     {
-      id: "tia", c: "base", t: "短暂性脑缺血发作（TIA）", en: "Transient Ischemic Attack",
+      id: "tia", uid: "stroke-mi/tia", type: "condition", chk: "2026-11", c: "base", t: "短暂性脑缺血发作（TIA）", en: "Transient Ischemic Attack",
       s: "短暂性脑缺血发作是脑部某一部分的血液供应暂时中断引起的，是今后不久发生完全性卒中的预警信号；即使症状消失，也需要到医院接受评估。",
       n: [["1.5%", "TIA后2天内卒中风险（现代快速评估体系下）"], ["5.1%", "1年内卒中风险（TIAregistry）"], ["24小时", "应在此时间内完成评估"]],
       d: [
@@ -127,7 +127,7 @@
       v: [["TIA 为什么是急症", "短暂性脑缺血发作 科普", "TIA mini stroke warning sign"]],
     },
     {
-      id: "af", c: "base", t: "心房颤动与心源性栓塞", en: "Atrial Fibrillation",
+      id: "af", uid: "stroke-mi/af", type: "condition", chk: "2026-11", c: "base", t: "心房颤动与心源性栓塞", en: "Atrial Fibrillation",
       s: "房颤使卒中风险增加约5倍，房颤相关卒中往往更重、致残率更高。",
       n: [["~5倍", "房颤患者卒中风险增加"], ["~20–25%", "缺血性卒中由心源性栓塞引起的比例"]],
       d: [
@@ -145,7 +145,7 @@
       v: [["房颤为什么会引起脑梗", "房颤 脑梗 左心耳 血栓 科普", "atrial fibrillation stroke left atrial appendage"]],
     },
     {
-      id: "heartbrain", c: "base", t: "心脑同源", en: "Heart–Brain Connection",
+      id: "heartbrain", uid: "stroke-mi/heartbrain", type: "concept", chk: "2026-11", c: "base", t: "心脑同源", en: "Heart–Brain Connection",
       s: "心梗患者容易发生卒中，卒中患者也常合并冠心病，必须一起管理。",
       d: [
         "心梗和脑梗有共同的危险因素（高血压、高LDL-C、糖尿病、吸烟），也有共同的病理基础（动脉粥样硬化和血栓）。一种血管床有病变的人，其他血管床也常有病变，这叫“多血管床疾病”。",
@@ -163,7 +163,7 @@
 
     /* ───────────── 危险因素 ───────────── */
     {
-      id: "htn", c: "risk", t: "高血压", en: "Hypertension",
+      id: "htn", uid: "stroke-mi/htn", type: "condition", chk: "2026-11", c: "risk", t: "高血压", en: "Hypertension",
       s: "卒中第一位的可控危险因素；降压收缩压10 mmHg，卒中风险约降27%。",
       n: [["<130/80", "大多数成人的降压目标（2025 AHA/ACC、中国2024指南）"], ["−27%", "收缩压每降10 mmHg对应的卒中风险下降"], ["−20%", "同时对应的主要心血管事件下降"]],
       d: [
@@ -183,7 +183,7 @@
       v: [["如何正确在家测血压", "家庭 正确测量血压 方法", "how to measure blood pressure at home correctly"]],
     },
     {
-      id: "lipid", c: "risk", t: "血脂与LDL-C", en: "LDL Cholesterol",
+      id: "lipid", uid: "stroke-mi/lipid", type: "marker", chk: "2026-11", c: "risk", t: "血脂与LDL-C", en: "LDL Cholesterol",
       s: "LDL-C是动脉粥样硬化的“元凶”，越低越好、越早越好。",
       n: [["−22%", "LDL-C每降低1 mmol/L，主要血管事件下降（CTT）"], ["<1.4 mmol/L", "极高危人群目标，且较基线降低≥50%"], ["<2.6 mmol/L", "高危人群目标"]],
       d: [
@@ -202,7 +202,7 @@
       v: [["看懂血脂化验单", "血脂化验单 LDL 怎么看", "LDL cholesterol explained"]],
     },
     {
-      id: "lpa", c: "risk", t: "脂蛋白(a)", en: "Lipoprotein(a)",
+      id: "lpa", uid: "stroke-mi/lpa", type: "marker", chk: "2026-11", c: "risk", t: "脂蛋白(a)", en: "Lipoprotein(a)",
       s: "主要由基因决定的独立危险因素，约每5人中有1人升高，一生至少查一次。",
       n: [["~20%", "人群中Lp(a)升高的比例"], ["1次", "成人一生至少检测一次（ESC/EAS 2025）"]],
       d: [
@@ -218,7 +218,7 @@
       v: [["脂蛋白a是什么", "脂蛋白a Lp(a) 科普", "lipoprotein(a) explained"]],
     },
     {
-      id: "dm", c: "risk", t: "糖尿病与代谢异常", en: "Diabetes & Metabolic Risk",
+      id: "dm", uid: "stroke-mi/dm", type: "condition", chk: "2026-11", c: "risk", t: "糖尿病与代谢异常", en: "Diabetes & Metabolic Risk",
       s: "糖尿病使心梗和卒中风险约翻倍，且心梗症状常常不典型。",
       n: [["~2倍", "糖尿病患者心血管事件风险"], ["HbA1c ~7%", "多数成人的血糖控制目标（需个体化）"]],
       d: [
@@ -235,7 +235,7 @@
       v: [["糖尿病与心血管病", "糖尿病 心血管 并发症 科普", "diabetes and heart disease"]],
     },
     {
-      id: "smoke", c: "risk", t: "吸烟与二手烟", en: "Smoking",
+      id: "smoke", uid: "stroke-mi/smoke", type: "lifestyle", chk: "2026-11", c: "risk", t: "吸烟与二手烟", en: "Smoking",
       s: "吸烟使心梗风险成倍增加；戒烟是性价比最高的“治疗”。",
       n: [["~1年", "戒烟后冠心病额外风险约下降一半"], ["5–15年", "戒烟后卒中风险逐渐接近不吸烟者"]],
       d: [
@@ -252,7 +252,7 @@
       v: [["戒烟后身体会发生什么变化", "戒烟 身体变化 时间线", "what happens when you quit smoking timeline"]],
     },
     {
-      id: "le8", c: "risk", t: "生命八要素（健康生活方式）", en: "Life's Essential 8",
+      id: "le8", uid: "stroke-mi/le8", type: "lifestyle", chk: "2026-11", c: "risk", t: "生命八要素（健康生活方式）", en: "Life's Essential 8",
       s: "饮食、运动、戒烟、睡眠、体重、血脂、血糖、血压——八项全部达标的人，心脑血管风险最低。",
       n: [["150分钟", "每周中等强度有氧运动"], ["7–9小时", "成人每晚推荐睡眠时间"], ["<5 g", "每日食盐摄入"]],
       d: [
@@ -272,7 +272,7 @@
 
     /* ───────────── 识别症状 ───────────── */
     {
-      id: "mi-sx", c: "sign", t: "心梗典型症状", en: "Heart Attack Symptoms",
+      id: "mi-sx", uid: "stroke-mi/mi-sx", type: "symptom", chk: "2026-11", c: "sign", t: "心梗典型症状", en: "Heart Attack Symptoms",
       s: "胸口压榨感、闷痛超过几分钟不缓解，可放射到手臂、下巴、后背——立即拨打当地急救电话。",
       n: [[">5分钟", "胸痛持续不缓解就应呼叫急救"], ["1小时", "发病后首个小时猝死风险最高"]],
       d: [
@@ -291,7 +291,7 @@
       v: [["心梗有哪些信号", "心梗 症状 信号 胸痛 科普", "heart attack warning signs"]],
     },
     {
-      id: "mi-atyp", c: "sign", t: "不典型心梗：女性、老人、糖尿病患者", en: "Atypical Presentations",
+      id: "mi-atyp", uid: "stroke-mi/mi-atyp", type: "symptom", chk: "2026-11", c: "sign", t: "不典型心梗：女性、老人、糖尿病患者", en: "Atypical Presentations",
       s: "气短、乏力、恶心、背痛、上腹痛也可能是心梗；女性最常见的症状仍是胸痛。",
       d: [
         "女性、老年人、糖尿病患者和慢性肾病患者的心梗症状更容易“不典型”：可能只有气短、极度疲乏、恶心呕吐、上腹或背部不适、出汗、头晕，甚至只有意识改变或晕厥。",
@@ -307,7 +307,7 @@
       v: [["女性心梗症状有何不同", "女性 心梗 症状 不典型", "heart attack symptoms in women"]],
     },
     {
-      id: "befast", c: "sign", t: "BE FAST 识别卒中", en: "BE FAST",
+      id: "befast", uid: "stroke-mi/befast", type: "symptom", chk: "2026-11", c: "sign", t: "BE FAST 识别卒中", en: "BE FAST",
       s: "平衡、眼睛、面部、手臂、言语——任何一项突然出现异常，马上打急救电话。",
       n: [["B", "Balance：突然走路不稳、眩晕"], ["E", "Eyes：突然一眼或双眼视物模糊/缺损/复视"], ["F", "Face：口角歪斜，笑时一侧不动"], ["A", "Arm：一侧手臂无力，平举后下垂"], ["S", "Speech：说话含糊、听不懂话"], ["T", "Time：立即呼叫急救，记下时间"]],
       d: [
@@ -325,7 +325,7 @@
       v: [["BE FAST卒中识别口诀", "BE FAST 卒中 识别", "BE FAST stroke symptoms"]],
     },
     {
-      id: "s120", c: "sign", t: "中风120", en: "Stroke 1-2-0",
+      id: "s120", uid: "stroke-mi/s120", type: "symptom", chk: "2026-11", c: "sign", t: "中风120", en: "Stroke 1-2-0",
       s: "中国原创的识别口诀：1看一张脸，2查两只手臂，0聆听语言——有异常立即拨打当地急救电话。",
       n: [["1", "看1张脸：口角歪斜、不对称"], ["2", "查2只胳膊：平举时一侧无力"], ["0", "聆（零）听语言：言语不清、表达困难"]],
       d: [
@@ -345,7 +345,7 @@
 
     /* ───────────── 院前急救 ───────────── */
     {
-      id: "call120", c: "aid", t: "立即呼叫急救，不要自己去医院", en: "Call Emergency Services",
+      id: "call120", uid: "stroke-mi/call120", type: "first-aid", chk: "2026-11", c: "aid", t: "立即呼叫急救，不要自己去医院", en: "Call Emergency Services",
       s: "救护车能提前传心电图、预通知医院，并在途中处理心脏骤停。",
       n: [["120", "中国大陆急救电话（出处：中国政府网，第十三条）"], ["999", "英国急救电话（出处：NHS）"], ["999", "香港急救电话（出处：香港消防处）"], ["119", "台湾急救电话（出处：内政部消防署）"], ["112", "欧盟统一紧急号码（出处：意大利卫生部 / 欧盟委员会）"], ["911", "美国/加拿大急救电话（出处：美国国家 911 项目 / 加拿大 CRTC）"], ["000", "澳洲急救电话（出处：澳洲基础设施部）"]],
       d: [
@@ -373,7 +373,7 @@
       v: [["拨打急救电话时要说清楚什么", "拨打急救电话 正确方法", "how to call emergency services"]],
     },
     {
-      id: "aspirin", c: "aid", t: "院前阿司匹林：心梗可用，卒中慎用", en: "Prehospital Aspirin",
+      id: "aspirin", uid: "stroke-mi/aspirin", type: "first-aid", chk: "2026-11", c: "aid", t: "院前阿司匹林：心梗可用，卒中慎用", en: "Prehospital Aspirin",
       s: "疑似心梗、无禁忌时可嚼服阿司匹林；疑似卒中在CT排除出血前不要自行服用。",
       n: [["~23%", "ISIS-2中阿司匹林降低心梗后血管死亡的幅度"]],
       d: [
@@ -392,7 +392,7 @@
       v: [["心梗时能不能吃阿司匹林", "心梗 阿司匹林 嚼服 急救", "aspirin during heart attack"]],
     },
     {
-      id: "cpr", c: "aid", t: "心肺复苏（CPR）与AED", en: "CPR & AED",
+      id: "cpr", uid: "stroke-mi/cpr", type: "first-aid", chk: "2026-11", c: "aid", t: "心肺复苏（CPR）与AED", en: "CPR & AED",
       s: "发现有人倒地无反应、无正常呼吸：呼救、按压、取AED。旁观者CPR可使存活率成倍提高。",
       n: [["100–120次/分", "胸外按压频率"], ["5–6 cm", "成人按压深度"], ["2–3倍", "旁观者CPR可提高的存活机会"]],
       d: [
@@ -411,7 +411,7 @@
       v: [["心肺复苏CPR+AED完整教学", "心肺复苏 CPR AED 教学 红十字会", "hands-only CPR AED tutorial"]],
     },
     {
-      id: "aid-dont", c: "aid", t: "急救误区：这些事不要做", en: "First-Aid Myths",
+      id: "aid-dont", uid: "stroke-mi/aid-dont", type: "first-aid", chk: "2026-11", c: "aid", t: "急救误区：这些事不要做", en: "First-Aid Myths",
       s: "掐人中、扎手指放血、喂水喂药、拍打摇晃、自行驾车——都可能耽误或加重病情。",
       d: [
         "民间流传的很多“急救方法”没有任何科学依据，反而浪费宝贵时间：扎手指或耳垂放血不能治疗卒中；掐人中对心脏骤停无效；大力摇晃可能加重损伤。",
@@ -428,7 +428,7 @@
       v: [["中风急救误区", "中风 急救 误区 放血", "stroke first aid myths"]],
     },
     {
-      id: "onset", c: "aid", t: "记录发病时间与“最后正常时间”", en: "Last Known Well",
+      id: "onset", uid: "stroke-mi/onset", type: "first-aid", chk: "2026-11", c: "aid", t: "记录发病时间与“最后正常时间”", en: "Last Known Well",
       s: "溶栓、取栓都以时间为依据，一个准确的时间点可能决定能否治疗。",
       d: [
         "对卒中患者，医生需要知道“最后一次看到患者正常的时间”（Last Known Well, LKW），而不是“发现症状的时间”。如果夜间睡前正常、早上醒来发病，LKW就是前一晚入睡时间。",
@@ -446,7 +446,7 @@
 
     /* ───────────── 心梗救治 ───────────── */
     {
-      id: "ecg", c: "mi", t: "心电图", en: "12-lead ECG",
+      id: "ecg", uid: "stroke-mi/ecg", type: "test", chk: "2026-11", c: "mi", t: "心电图", en: "12-lead ECG",
       s: "做12导联心电图，用于识别STEMI并决定是否立即开通血管。",
       n: [["12/18导联", "必要时加做右胸和后壁导联"]],
       d: [
@@ -463,7 +463,7 @@
       v: [["心梗心电图怎么看", "STEMI 心电图 识别", "STEMI ECG recognition"]],
     },
     {
-      id: "trop", c: "mi", t: "高敏肌钙蛋白：0/1小时快速诊断", en: "High-sensitivity Troponin",
+      id: "trop", uid: "stroke-mi/trop", type: "test", chk: "2026-11", c: "mi", t: "高敏肌钙蛋白：0/1小时快速诊断", en: "High-sensitivity Troponin",
       s: "心肌损伤最敏感的标志物，0/1h或0/2h算法可快速排除或确诊心梗。",
       n: [["0/1h", "ESC推荐的快速诊断/排除算法"], ["99th", "诊断阈值：超过正常上限第99百分位"]],
       d: [
@@ -480,7 +480,7 @@
       v: [["肌钙蛋白是什么", "肌钙蛋白 心梗 诊断 科普", "troponin heart attack test explained"]],
     },
     {
-      id: "pci", c: "mi", t: "直接PCI", en: "Primary PCI",
+      id: "pci", uid: "stroke-mi/pci", type: "treatment", chk: "2026-11", c: "mi", t: "直接PCI", en: "Primary PCI",
       s: "STEMI首选急诊介入开通血管。",
       d: [
         "直接经皮冠状动脉介入治疗（PCI）是通过手腕（桡动脉）或大腿（股动脉）穿刺，把导管送到冠状动脉，用球囊扩张并植入支架，恢复血流。与溶栓相比，它开通率更高、出血更少，是STEMI的首选再灌注方式。",
@@ -495,7 +495,7 @@
       v: [["心脏支架手术是怎么做的（动画）", "心脏支架 PCI 手术 动画", "PCI stent procedure animation"]],
     },
     {
-      id: "lysis-mi", c: "mi", t: "心梗溶栓：无法及时PCI时", en: "Fibrinolysis for STEMI",
+      id: "lysis-mi", uid: "stroke-mi/lysis-mi", type: "treatment", chk: "2026-11", c: "mi", t: "心梗溶栓：无法及时PCI时", en: "Fibrinolysis for STEMI",
       s: "预计无法及时完成PCI时，应在诊断后尽快开始溶栓，随后转运至PCI中心。",
       d: [
         "在偏远地区或无法及时到达PCI中心时，溶栓（如替奈普酶、阿替普酶、瑞替普酶）是挽救心肌的有效方法，越早越好。",
@@ -510,7 +510,7 @@
       v: [["STEMI溶栓治疗", "心梗 溶栓 STEMI", "STEMI fibrinolysis"]],
     },
     {
-      id: "nste", c: "mi", t: "NSTE-ACS：危险分层与介入时机", en: "NSTE-ACS",
+      id: "nste", uid: "stroke-mi/nste", type: "condition", chk: "2026-11", c: "mi", t: "NSTE-ACS：危险分层与介入时机", en: "NSTE-ACS",
       s: "非ST抬高心梗根据风险决定造影时机：风险越高，造影越早。",
       d: [
         "NSTE-ACS（NSTEMI和不稳定型心绞痛）的血管通常没有完全闭塞，但同样可能进展。治疗包括抗血小板、抗凝、抗缺血药物，以及根据风险安排冠脉造影。",
@@ -526,7 +526,7 @@
       v: [["NSTEMI的诊断和治疗", "NSTEMI 非ST段抬高心梗 治疗", "NSTEMI management"]],
     },
     {
-      id: "dapt", c: "mi", t: "心梗后双联抗血小板（DAPT）", en: "Dual Antiplatelet Therapy",
+      id: "dapt", uid: "stroke-mi/dapt", type: "treatment", chk: "2026-11", c: "mi", t: "心梗后双联抗血小板（DAPT）", en: "Dual Antiplatelet Therapy",
       s: "阿司匹林+P2Y12抑制剂（替格瑞洛/普拉格雷/氯吡格雷）可依出血风险个体化调整。",
       d: [
         "ACS后，冠脉内的斑块和新植入的支架都容易形成血栓。双联抗血小板（阿司匹林+P2Y12抑制剂）可以显著降低再梗和支架内血栓风险，但会增加出血。",
@@ -545,7 +545,7 @@
 
     /* ───────────── 脑梗救治 ───────────── */
     {
-      id: "imaging", c: "st", t: "卒中影像：CT、CTA、灌注与MRI", en: "Stroke Imaging",
+      id: "imaging", uid: "stroke-mi/imaging", type: "test", chk: "2026-11", c: "st", t: "卒中影像：CT、CTA、灌注与MRI", en: "Stroke Imaging",
       s: "到院后第一时间做头颅CT排除出血，再用CTA找大血管闭塞，必要时用灌注影像扩展时间窗。",
       n: [["ASPECTS", "评估早期缺血范围（0–10分）"]],
       d: [
@@ -562,7 +562,7 @@
       v: [["CT灌注在卒中中的作用", "CT灌注 卒中 核心 半暗带", "CT perfusion stroke core penumbra"]],
     },
     {
-      id: "ivt", c: "st", t: "静脉溶栓：阿替普酶与替奈普酶", en: "IV Thrombolysis",
+      id: "ivt", uid: "stroke-mi/ivt", type: "treatment", chk: "2026-11", c: "st", t: "静脉溶栓：阿替普酶与替奈普酶", en: "IV Thrombolysis",
       s: "发病4.5小时内符合条件的患者应尽快溶栓。",
       n: [["4.5小时", "标准溶栓时间窗"]],
       d: [
@@ -581,7 +581,7 @@
       v: [["脑梗溶栓是怎么回事", "脑梗 溶栓 时间窗 科普", "stroke thrombolysis tPA tenecteplase explained"]],
     },
     {
-      id: "evt", c: "st", t: "血管内取栓", en: "Endovascular Thrombectomy",
+      id: "evt", uid: "stroke-mi/evt", type: "treatment", chk: "2026-11", c: "st", t: "血管内取栓", en: "Endovascular Thrombectomy",
       s: "大血管闭塞的“特效疗法”：每约2.6例治疗就有1例致残程度减轻；时间窗可达24小时。",
       n: [["2.6", "需治疗人数：每治疗2.6人有1人残疾程度降低（HERMES）"], ["0–24小时", "影像筛选后的前循环取栓时间窗"], ["ASPECTS 3–5", "大核心梗死患者也可能获益"]],
       d: [
@@ -604,7 +604,7 @@
       v: [["脑梗取栓手术动画", "脑血管 取栓 手术 动画", "mechanical thrombectomy stroke animation"]],
     },
     {
-      id: "ich-tx", c: "st", t: "脑出血急性期治疗", en: "Acute ICH Management",
+      id: "ich-tx", uid: "stroke-mi/ich-tx", type: "treatment", chk: "2026-11", c: "st", t: "脑出血急性期治疗", en: "Acute ICH Management",
       s: "尽早控制血压、逆转抗凝、管理血糖和体温——INTERACT3“集束化管理”改善预后。",
       n: [["<140 mmHg", "收缩压目标（1小时内达标），避免过度波动"], ["INTERACT3", "集束化护理改善功能结局的研究"]],
       d: [
@@ -621,7 +621,7 @@
       v: [["脑出血急性期如何治疗", "脑出血 急性期 治疗 降压", "intracerebral hemorrhage management"]],
     },
     {
-      id: "unit", c: "st", t: "卒中单元与早期并发症管理", en: "Stroke Unit Care",
+      id: "unit", uid: "stroke-mi/unit", type: "treatment", chk: "2026-11", c: "st", t: "卒中单元与早期并发症管理", en: "Stroke Unit Care",
       s: "多学科卒中单元可降低死亡和残疾；吞咽筛查、防跌倒、防血栓、早期康复缺一不可。",
       d: [
         "卒中单元是由神经科医生、护士、康复治疗师、营养师等组成的专门病区。Cochrane系统评价显示，与普通病房相比，卒中单元能降低患者死亡、依赖和需要长期机构照护的比例。",
@@ -639,7 +639,7 @@
 
     /* ───────────── 二级预防与康复 ───────────── */
     {
-      id: "lipid-tx", c: "prev", t: "强化降脂治疗", en: "Lipid-lowering Therapy",
+      id: "lipid-tx", uid: "stroke-mi/lipid-tx", type: "treatment", chk: "2026-11", c: "prev", t: "强化降脂治疗", en: "Lipid-lowering Therapy",
       s: "他汀为基础，不达标时联用依折麦布、PCSK9抑制剂或贝派地酸；目标LDL-C<1.4 mmol/L。",
       n: [["<1.4 mmol/L", "心梗/动脉粥样硬化性卒中后LDL-C目标（ESC）"], ["≥50%", "同时较基线降低幅度"], ["4–6周", "调整治疗后复查血脂"]],
       d: [
@@ -658,7 +658,7 @@
       v: [["他汀类药物的真相", "他汀 副作用 真相 科普", "statins myths and facts"]],
     },
     {
-      id: "sec-ap", c: "prev", t: "卒中/TIA后抗血小板治疗", en: "Antiplatelet after Stroke/TIA",
+      id: "sec-ap", uid: "stroke-mi/sec-ap", type: "treatment", chk: "2026-11", c: "prev", t: "卒中/TIA后抗血小板治疗", en: "Antiplatelet after Stroke/TIA",
       s: "轻型卒中/高危TIA：阿司匹林+氯吡格雷双抗，之后单药长期维持。",
       n: [["~60%", "中国人群CYP2C19功能缺失等位基因携带比例（影响氯吡格雷疗效）"]],
       d: [
@@ -675,7 +675,7 @@
       v: [["脑梗后怎么吃抗血小板药", "脑梗 双抗 氯吡格雷 阿司匹林", "dual antiplatelet minor stroke TIA CHANCE"]],
     },
     {
-      id: "af-oac", c: "prev", t: "房颤抗凝与左心耳封堵", en: "Anticoagulation in AF",
+      id: "af-oac", uid: "stroke-mi/af-oac", type: "treatment", chk: "2026-11", c: "prev", t: "房颤抗凝与左心耳封堵", en: "Anticoagulation in AF",
       s: "新型口服抗凝药（DOAC）是首选；房颤相关卒中后可早期启动抗凝。",
       n: [["~2/3", "抗凝可降低房颤卒中风险的幅度（与不治疗相比）"], ["早期", "ELAN研究：轻中度卒中后48小时内启动DOAC是安全的"]],
       d: [
@@ -693,7 +693,7 @@
       v: [["房颤为什么要吃抗凝药", "房颤 抗凝药 新型口服抗凝药 科普", "atrial fibrillation anticoagulation explained"]],
     },
     {
-      id: "bp-tx", c: "prev", t: "心梗/卒中后的血压管理", en: "BP Control after MI/Stroke",
+      id: "bp-tx", uid: "stroke-mi/bp-tx", type: "treatment", chk: "2026-11", c: "prev", t: "心梗/卒中后的血压管理", en: "BP Control after MI/Stroke",
       s: "长期目标一般<130/80 mmHg；家庭自测血压，选择有心脑保护证据的药物。",
       n: [["<130/80", "多数心梗/卒中后患者的长期目标"], ["每天2次", "家庭血压：早晨服药前、晚上睡前"]],
       d: [
@@ -710,7 +710,7 @@
       v: [["脑梗后血压控制多少合适", "脑梗 二级预防 血压 目标", "blood pressure target after stroke"]],
     },
     {
-      id: "cardio-metab", c: "prev", t: "心血管获益的降糖/减重药物", en: "SGLT2i & GLP-1RA",
+      id: "cardio-metab", uid: "stroke-mi/cardio-metab", type: "treatment", chk: "2026-11", c: "prev", t: "心血管获益的降糖/减重药物", en: "SGLT2i & GLP-1RA",
       s: "SGLT2抑制剂、GLP-1受体激动剂不只降糖，还能减少心血管事件；司美格鲁肽在非糖尿病肥胖心血管病患者中降低MACE 20%。",
       n: [["−20%", "SELECT研究：司美格鲁肽降低主要心血管事件"]],
       d: [
@@ -727,7 +727,7 @@
       v: [["GLP-1药物与心血管保护", "司美格鲁肽 心血管 获益", "GLP-1 semaglutide heart benefits"]],
     },
     {
-      id: "extra", c: "prev", t: "其他获益措施：疫苗与抗炎治疗", en: "Vaccines & Anti-inflammation",
+      id: "extra", uid: "stroke-mi/extra", type: "treatment", chk: "2026-11", c: "prev", t: "其他获益措施：疫苗与抗炎治疗", en: "Vaccines & Anti-inflammation",
       s: "心梗后接种流感疫苗可降低死亡；低剂量秋水仙碱的证据存在分歧，需医生评估。",
       d: [
         "流感会诱发心梗和卒中。IAMI研究显示，心梗后早期接种流感疫苗可降低全因死亡和心血管死亡。2023 ESC ACS指南建议ACS患者接种流感疫苗（IIa类推荐）。",
@@ -742,7 +742,7 @@
       v: [["流感疫苗与心脏保护", "流感疫苗 心梗 保护", "flu vaccine heart attack protection"]],
     },
     {
-      id: "crehab", c: "prev", t: "心脏康复", en: "Cardiac Rehabilitation",
+      id: "crehab", uid: "stroke-mi/crehab", type: "rehab", chk: "2026-11", c: "prev", t: "心脏康复", en: "Cardiac Rehabilitation",
       s: "运动训练+危险因素管理+心理支持，可降低约四分之一的心血管死亡，却被严重低估使用。",
       n: [["−26%", "心脏康复降低心血管死亡（Cochrane 2021，RR≈0.74）"], ["I类", "各大指南的最高级推荐"]],
       d: [
@@ -759,7 +759,7 @@
       v: [["心梗后康复运动", "心脏康复 运动 心梗后", "cardiac rehabilitation exercise after heart attack"]],
     },
     {
-      id: "srehab", c: "prev", t: "卒中康复", en: "Stroke Rehabilitation",
+      id: "srehab", uid: "stroke-mi/srehab", type: "rehab", chk: "2026-11", c: "prev", t: "卒中康复", en: "Stroke Rehabilitation",
       s: "康复越早、越系统，功能恢复越好；前3–6个月是恢复最快的时期。",
       n: [["3–6个月", "神经功能恢复最快的时期"], ["多学科", "运动、言语、吞咽、认知、心理康复"]],
       d: [
@@ -776,7 +776,7 @@
       v: [["脑梗后家庭康复训练", "脑卒中 偏瘫 家庭康复 训练", "stroke rehabilitation exercises at home"]],
     },
     {
-      id: "mental", c: "prev", t: "心理健康与回归生活", en: "Mental Health & Return to Life",
+      id: "mental", uid: "stroke-mi/mental", type: "rehab", chk: "2026-11", c: "prev", t: "心理健康与回归生活", en: "Mental Health & Return to Life",
       s: "心梗、卒中后抑郁和焦虑常见，会使复发和死亡风险增加，需要主动识别和治疗。",
       d: [
         "约20–30%的心梗患者和约三分之一的卒中患者会出现抑郁，焦虑和睡眠障碍也很常见。抑郁会降低服药和康复依从性，与较高的复发和死亡风险相关。",
@@ -794,7 +794,7 @@
 
     /* ───────────── 评估工具 ───────────── */
     {
-      id: "risk-score", c: "tool", t: "心血管风险评估：China-PAR / PREVENT / SCORE2", en: "CVD Risk Calculators",
+      id: "risk-score", uid: "stroke-mi/risk-score", type: "tool", chk: "2026-11", c: "tool", t: "心血管风险评估：China-PAR / PREVENT / SCORE2", en: "CVD Risk Calculators",
       s: "用年龄、性别、血压、血脂、血糖、吸烟等估算10年心梗和卒中风险，指导一级预防。",
       d: [
         "China-PAR模型基于中国人群队列开发，可以估算10年和终生动脉粥样硬化性心血管病风险，更适合中国人。美国2023年推出PREVENT方程（纳入肾功能，并可估算心衰风险），2025 AHA/ACC高血压指南已改用它；欧洲使用SCORE2和SCORE2-OP（70岁以上）。",
@@ -810,7 +810,7 @@
       v: [["如何评估自己的心血管风险", "心血管 风险评估 10年风险", "cardiovascular risk calculator explained"]],
     },
     {
-      id: "grace", c: "tool", t: "GRACE 评分", en: "GRACE Score",
+      id: "grace", uid: "stroke-mi/grace", type: "tool", chk: "2026-11", c: "tool", t: "GRACE 评分", en: "GRACE Score",
       s: "评估急性冠脉综合征患者院内和6个月死亡风险，>140分为高危。",
       d: [
         "GRACE评分纳入年龄、心率、收缩压、血肌酐、Killip心功能分级、入院时心脏骤停、ST段偏移、心肌标志物升高等8项，用于NSTE-ACS的风险分层，指导侵入性治疗的时机。",
@@ -824,7 +824,7 @@
       v: [["GRACE评分讲解", "GRACE评分 ACS 危险分层", "GRACE score ACS explained"]],
     },
     {
-      id: "nihss", c: "tool", t: "NIHSS 卒中量表", en: "NIH Stroke Scale",
+      id: "nihss", uid: "stroke-mi/nihss", type: "tool", chk: "2026-11", c: "tool", t: "NIHSS 卒中量表", en: "NIH Stroke Scale",
       s: "评估卒中严重程度（0–42分），指导溶栓/取栓决策并预测预后。",
       n: [["0–42", "分数越高越严重"], ["≥6", "常提示可能存在大血管闭塞"], ["≤3", "常定义为轻型卒中"]],
       d: [
@@ -839,7 +839,7 @@
       v: [["NIHSS评分演示", "NIHSS 评分 演示 培训", "NIHSS stroke scale demonstration"]],
     },
     {
-      id: "abcd2", c: "tool", t: "ABCD² 评分（TIA）", en: "ABCD² Score",
+      id: "abcd2", uid: "stroke-mi/abcd2", type: "tool", chk: "2026-11", c: "tool", t: "ABCD² 评分（TIA）", en: "ABCD² Score",
       s: "评估TIA后短期卒中风险：≥4分为高危。所有疑似TIA都应尽快就医。",
       d: [
         "ABCD²评分包括年龄（Age）、血压（Blood pressure）、临床症状（Clinical features）、持续时间（Duration）和糖尿病（Diabetes），总分0–7分。原始研究中，0–3分、4–5分、6–7分对应的2天卒中风险分别约为1%、4%和8%。",
@@ -867,7 +867,7 @@
       v: [["ABCD2评分", "ABCD2 评分 TIA", "ABCD2 score TIA"]],
     },
     {
-      id: "chads", c: "tool", t: "CHA₂DS₂-VA 评分（房颤卒中风险）", en: "CHA₂DS₂-VA / VASc",
+      id: "chads", uid: "stroke-mi/chads", type: "tool", chk: "2026-11", c: "tool", t: "CHA₂DS₂-VA 评分（房颤卒中风险）", en: "CHA₂DS₂-VA / VASc",
       s: "评估房颤患者的卒中风险：2024 ESC推荐CHA₂DS₂-VA ≥2分应抗凝，1分应考虑。",
       d: [
         "CHA₂DS₂-VASc包括心衰、高血压、年龄、糖尿病、既往卒中/TIA/血栓栓塞、血管疾病和女性。2024 ESC房颤指南去掉了“女性”一项，改为CHA₂DS₂-VA，因为女性本身并不独立增加风险，且便于非二元性别人群使用。美国2023指南仍使用CHA₂DS₂-VASc（男性≥2、女性≥3推荐抗凝）。",
@@ -895,7 +895,7 @@
       v: [["房颤抗凝评分怎么算", "CHA2DS2-VASc 评分 房颤", "CHA2DS2-VASc score explained"]],
     },
     {
-      id: "mrs", c: "tool", t: "改良Rankin量表（mRS）", en: "Modified Rankin Scale",
+      id: "mrs", uid: "stroke-mi/mrs", type: "tool", chk: "2026-11", c: "tool", t: "改良Rankin量表（mRS）", en: "Modified Rankin Scale",
       s: "衡量卒中后残疾程度（0–6分），是几乎所有卒中试验的主要结局指标。",
       n: [["0", "完全无症状"], ["1", "有症状但无明显残疾，能完成日常工作"], ["2", "轻度残疾，生活自理"], ["3", "中度残疾，需要部分帮助，可独立行走"], ["4", "中重度残疾，不能独立行走和生活"], ["5", "重度残疾，卧床、失禁，需持续照护"], ["6", "死亡"]],
       d: [

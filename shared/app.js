@@ -177,7 +177,7 @@ function renderDetail(id){
     <a class="badge" href="#/learn/${c.id}">${catIcon(c)} ${c.t} · ${i+1}/${siblings.length}</a>
     <h2 class="d-title">${esc(n.t)}</h2>
     <p class="d-en">${esc(n.en)}</p>
-    <p class="trust"><button type="button" data-to="d-refs">${n.ref.length} 条权威出处</button><span>核对 ${esc(REVIEWED)}</span>${status}</p>
+    <p class="trust"><button type="button" data-to="d-refs">${n.ref.length} 条权威出处</button><span>核对 ${esc(n.chk || REVIEWED)}</span>${status}</p>
     <p class="d-lead">${esc(n.s)}</p>
   </div>
   ${reviewFlag(n.id)}
@@ -203,7 +203,7 @@ function renderDetail(id){
       <a class="btn primary" id="doneBtn" href="${pNext ? "#/k/"+pNext.id : "#/learn"}">${pNext ? "读完了，下一条 ›" : "读完了，回到目录"}${pNext ? `<span class="nexttt">${esc(pNext.t)}</span>` : ""}</a>
     </div>
   </div>
-  <p class="note foot">本条内容核对于 ${REVIEWED}，仅供科普参考，不能替代医生面诊。</p>
+  <p class="note foot">本条内容核对于 ${esc(n.chk || REVIEWED)}，仅供科普参考，不能替代医生面诊。</p>
   ${siteFoot()}
   </div>`;
   if (n.calc) bindCalc(n);

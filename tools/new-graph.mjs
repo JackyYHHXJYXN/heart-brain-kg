@@ -23,12 +23,12 @@ fs.writeFileSync(path.join(dir, "data.js"), `/* ${title} — 内容数据（字�
 (function () {
   const doi = (d) => "https://doi.org/" + d;
   const CATS = [
-    { id: "base", t: "认识疾病", e: "基础", icon: "📘", color: "--c-base" },
+    { id: "base", t: "认识疾病", e: "基础", icon: "📘", ic: "book", color: "--c-base" },
     // 颜色变量可用 --c-base --c-risk --c-sign --c-aid --c-mi --c-st --c-prev --c-tool
   ];
   const NODES = [
     {
-      id: "example", c: "base", t: "示例知识点", en: "Example",
+      id: "example", uid: "${id}/example", type: "concept", chk: "${ym}", c: "base", t: "示例知识点", en: "Example",
       s: "一句话摘要。",
       n: [["数字", "说明"]],
       d: ["第一段详细解释。", "第二段。"],
@@ -54,6 +54,6 @@ for (const f of ["icon.svg", "icon-192.png", "icon-512.png", "og.png"]) fs.copyF
 const regFile = path.join(root, "registry.js"); let reg = fs.readFileSync(regFile, "utf8");
 const re = new RegExp(`(\\{ id: "${id}",[^\\n]*?)status: "soon"`);
 if (re.test(reg)) reg = reg.replace(re, '$1status: "live"');
-else reg = reg.replace(/\n\];/, `\n  { id: "${id}", title: "${title}", desc: "${desc}", icon: "📘", color: "#2563eb", status: "live" },\n];`);
+else reg = reg.replace(/\n\];/, `\n  { id: "${id}", title: "${title}", desc: "${desc}", icon: "📘", ic: "book", color: "#2563eb", status: "live" },\n];`);
 fs.writeFileSync(regFile, reg);
 console.log(`✓ 已创建 ${id}/。下一步：\n  1. 把 ${id}/icon*.png、og.png 换成本图谱自己的（目前是心梗图谱的占位图，社交分享会显示错图！）\n  2. 编辑 ${id}/data.js，填入知识点\n  3. node tools/validate.mjs`);

@@ -10,6 +10,10 @@ const warn = (g, m) => { warns++; console.warn(`! [${g}] ${m}`); };
 const loadJson = f => { const p = path.join(root, "tools", f); return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, "utf8")) : null; };
 const TIERS = loadJson("review-tiers.json") || { graphs: {} }, REVIEWS = loadJson("reviews.json") || {};
 const ICONS = (() => { const w = {}; vm.runInNewContext(fs.readFileSync(path.join(root, "shared", "icons.js"), "utf8"), { window: w }); return w.KG_ICON_PATHS || {}; })();
+const TYPES = new Set(["condition", "symptom", "first-aid", "test", "marker", "treatment", "lifestyle", "rehab", "tool", "concept"]);
+// 编码只记编号：ICD-11 不得改编（CC BY-ND 3.0 IGO）；MeSH、Wikidata 许可落文档前核实；不用 SNOMED CT
+const CODE_RE = { mesh: /^D\d{6}$/, wikidata: /^Q\d+$/, icd11: /^[0-9A-Z]{2}[0-9A-Z.]{0,6}$/ };
+const UIDS = new Map();
 const SEARCH = []; // 全站搜索索引（只收 live 图谱），循环结束后写入 shared/search-index.js
 const tierA = id => new Set(((TIERS.graphs || {})[id] || {}).A || []);
 const isSigned = (gid, nid) => { const v = (REVIEWS[gid] || {})[nid]; return !!(v && v.by && /^\d{4}-\d{2}-\d{2}$/.test(v.on || "")); };
@@ -44,6 +48,27 @@ for (const r of registry) {
     if (!t) err(g, "w 有空条目");
     if (typeof s === "number") { if (!(n.ref || [])[s - 1]) err(g, `w 出处序号 ${s} 超出 ref 范围`); }
     else if (!Array.isArray(s) || !/^https:\/\//.test(s[1] || "")) err(g, `w 条目缺少有效出处: ${t}`);
+  }
+  // 平台字段（2026-11）：uid 全站唯一且发布后不能删改；type 取固定词表；chk 逐条核对年月；codes 可选；META.path 可选
+  const now = new Date(), ym = now.getFullYear() * 12 + now.getMonth();
+  for (const n of NODES) {
+    const g = `${r.id}/${n.id}`;
+    if (!n.uid) err(g, "缺少全站唯一 uid");
+    else if (UIDS.has(n.uid)) err(g, `uid ${n.uid} 与 ${UIDS.get(n.uid)} 重复`);
+    else UIDS.set(n.uid, g);
+    if (!TYPES.has(n.type)) err(g, `type “${n.type}” 不在词表里：${[...TYPES].join(" / ")}`);
+    const m = /^(\d{4})-(\d{2})$/.exec(n.chk || "");
+    if (!m) err(g, "chk（逐条核对年月，YYYY-MM）缺失或格式不对");
+    else { const age = ym - (+m[1] * 12 + (+m[2] - 1)); if (age < 0) err(g, `chk ${n.chk} 晚于今天`); else if (age > 6) warn(g, `chk ${n.chk} 已超过 6 个月，按 docs/REVIEW_CHECKLIST.md 复核`); }
+    for (const [k, v] of Object.entries(n.codes || {})) {
+      const re = CODE_RE[k];
+      if (!re) err(g, `codes.${k} 不是允许的编码体系（${Object.keys(CODE_RE).join("/")}）`);
+      else if (!re.test(String(v))) err(g, `codes.${k} 格式不对: ${v}`);
+    }
+  }
+  if (META.path) {
+    const seen = new Set();
+    for (const x of META.path) { if (!ids.has(x)) err(r.id, `META.path 里的 ${x} 不存在`); if (seen.has(x)) err(r.id, `META.path 里 ${x} 重复`); seen.add(x); }
   }
   if (r.status === "live") for (const n of NODES) SEARCH.push([r.id, n.id, n.t, n.en || "", n.s, CATS.find(c => c.id === n.c).t, (n.k || []).join(" ")]);
   // 孤立节点
@@ -129,6 +154,17 @@ function checkPro(r, NODES) {
   const out = "/* 自动生成：node tools/validate.mjs。不要手改；改 tools/review-tiers.json、reviews.json、site-config.json */\nwindow.SITE_META = " + JSON.stringify({ feedbackUrl: /^https:\/\//.test(fb) ? fb : "", review }) + ";\n";
   const f = path.join(root, "shared", "site-meta.js"), old = fs.existsSync(f) ? fs.readFileSync(f, "utf8") : "";
   if (old !== out) { fs.writeFileSync(f, out); warn("site", "已重新生成 shared/site-meta.js：请更新所有图谱 sw.js 的 V 版本号再发布"); }
+}
+// uid 锁：tools/uids.lock.json 记录已登记的 uid（--stamp 时写入）。登记过的 uid 消失 = 已分享的链接/引用会断 → 错误。
+// 只检查本机存在 data.js 的图谱（draft 目录不进 Git）。确需下线的写进 retired 并注明原因。
+{
+  const f = path.join(root, "tools", "uids.lock.json");
+  const lock = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : { uids: [], retired: {} };
+  const present = new Set(registry.filter(r => fs.existsSync(path.join(root, r.id, "data.js"))).map(r => r.id));
+  for (const u of lock.uids) if (present.has(u.split("/")[0]) && !UIDS.has(u) && !(lock.retired || {})[u]) err("uid", `已登记的 ${u} 不见了（改名或删除会让旧链接失效；确需下线请写进 tools/uids.lock.json 的 retired）`);
+  const fresh = [...UIDS.keys()].filter(u => !lock.uids.includes(u));
+  if (fresh.length && !process.argv.includes("--stamp")) warn("uid", `${fresh.length} 个新 uid 未登记，发布前运行 --stamp`);
+  if (process.argv.includes("--stamp") && fresh.length) { lock.uids = [...lock.uids, ...fresh].sort(); lock.retired = lock.retired || {}; fs.writeFileSync(f, JSON.stringify(lock, null, 1) + "\n"); console.log(`  已登记 ${fresh.length} 个 uid`); }
 }
 // 生成 shared/search-index.js（合集首页的全站搜索；字段：图谱id, 知识点id, 标题, 英文名, 摘要, 分类名, 要点）
 {
