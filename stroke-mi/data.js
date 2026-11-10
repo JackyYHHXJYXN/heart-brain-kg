@@ -19,14 +19,14 @@
   const doi = (d) => "https://doi.org/" + d;
 
   const CATS = [
-    { id: "base", t: "认识疾病", e: "疾病基础", icon: "🫀", color: "--c-base" },
-    { id: "risk", t: "危险因素", e: "可控与不可控", icon: "⚖️", color: "--c-risk" },
-    { id: "sign", t: "识别症状", e: "早识别", icon: "👁️", color: "--c-sign" },
-    { id: "aid", t: "院前急救", e: "黄金时间", icon: "🚑", color: "--c-aid" },
-    { id: "mi", t: "心梗救治", e: "医院内", icon: "❤️‍🩹", color: "--c-mi" },
-    { id: "st", t: "脑梗救治", e: "医院内", icon: "🧠", color: "--c-st" },
-    { id: "prev", t: "二级预防与康复", e: "防复发", icon: "🛡️", color: "--c-prev" },
-    { id: "tool", t: "评估工具", e: "评分量表", icon: "📏", color: "--c-tool" },
+    { id: "base", t: "认识疾病", e: "疾病基础", icon: "🫀", ic: "heart", color: "--c-base" },
+    { id: "risk", t: "危险因素", e: "可控与不可控", icon: "⚖️", ic: "scale", color: "--c-risk" },
+    { id: "sign", t: "识别症状", e: "早识别", icon: "👁️", ic: "eye", color: "--c-sign" },
+    { id: "aid", t: "院前急救", e: "黄金时间", icon: "🚑", ic: "ambulance", color: "--c-aid" },
+    { id: "mi", t: "心梗救治", e: "医院内", icon: "❤️‍🩹", ic: "pulse", color: "--c-mi" },
+    { id: "st", t: "脑梗救治", e: "医院内", icon: "🧠", ic: "brain", color: "--c-st" },
+    { id: "prev", t: "二级预防与康复", e: "防复发", icon: "🛡️", ic: "shield", color: "--c-prev" },
+    { id: "tool", t: "评估工具", e: "评分量表", icon: "📏", ic: "ruler", color: "--c-tool" },
   ];
 
   const NODES = [
@@ -913,6 +913,7 @@
   window.KG = {
     META: {
       id: "stroke-mi",
+      rootIc: "pulse",
       title: "心梗·脑梗知识图谱",
       rootLabel: "心梗·脑梗",
       tagline: "早识别、快急救、防复发",

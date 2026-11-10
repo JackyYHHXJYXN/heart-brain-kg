@@ -9,6 +9,8 @@ const err = (g, m) => { errors++; console.error(`✗ [${g}] ${m}`); };
 const warn = (g, m) => { warns++; console.warn(`! [${g}] ${m}`); };
 const loadJson = f => { const p = path.join(root, "tools", f); return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, "utf8")) : null; };
 const TIERS = loadJson("review-tiers.json") || { graphs: {} }, REVIEWS = loadJson("reviews.json") || {};
+const ICONS = (() => { const w = {}; vm.runInNewContext(fs.readFileSync(path.join(root, "shared", "icons.js"), "utf8"), { window: w }); return w.KG_ICON_PATHS || {}; })();
+const SEARCH = []; // 全站搜索索引（只收 live 图谱），循环结束后写入 shared/search-index.js
 const tierA = id => new Set(((TIERS.graphs || {})[id] || {}).A || []);
 const isSigned = (gid, nid) => { const v = (REVIEWS[gid] || {})[nid]; return !!(v && v.by && /^\d{4}-\d{2}-\d{2}$/.test(v.on || "")); };
 for (const r of registry) {
@@ -32,6 +34,18 @@ for (const r of registry) {
     for (const x of n.vl || []) if (!/^https:\/\//.test(x[1] || "")) err(g, `vl 链接不是 https: ${x[1]}`);
   }
   for (const n of NODES) for (const x of n.r || []) if (!ids.has(x)) err(`${r.id}/${n.id}`, `关联 ${x} 不存在`);
+  // 图标：分类 ic 必须是 shared/icons.js 里有的名字
+  for (const c of CATS) { if (!c.ic) warn(`${r.id}/cat:${c.id}`, "分类没有 ic 图标名（会退回 emoji）"); else if (!ICONS[c.ic]) err(`${r.id}/cat:${c.id}`, `图标 ${c.ic} 不在 shared/icons.js 里`); }
+  if (META.rootIc && !ICONS[META.rootIc]) err(r.id, `META.rootIc ${META.rootIc} 不在 shared/icons.js 里`);
+  if (r.ic && !ICONS[r.ic]) err(r.id, `registry ic ${r.ic} 不在 shared/icons.js 里`);
+  // 何时立即就医 w（可选）：[[文字, 出处]]，出处 = ref 序号（从 1 起）或 [标题, https URL, 来源]；每条必须有出处
+  for (const n of NODES) for (const [t, s] of n.w || []) {
+    const g = `${r.id}/${n.id}`;
+    if (!t) err(g, "w 有空条目");
+    if (typeof s === "number") { if (!(n.ref || [])[s - 1]) err(g, `w 出处序号 ${s} 超出 ref 范围`); }
+    else if (!Array.isArray(s) || !/^https:\/\//.test(s[1] || "")) err(g, `w 条目缺少有效出处: ${t}`);
+  }
+  if (r.status === "live") for (const n of NODES) SEARCH.push([r.id, n.id, n.t, n.en || "", n.s, CATS.find(c => c.id === n.c).t, (n.k || []).join(" ")]);
   // 孤立节点
   const linked = new Set(); NODES.forEach(n => (n.r || []).forEach(x => { linked.add(n.id); linked.add(x); }));
   NODES.filter(n => !linked.has(n.id)).forEach(n => warn(`${r.id}/${n.id}`, "没有任何关联，图谱里会是孤点"));
@@ -115,6 +129,13 @@ function checkPro(r, NODES) {
   const out = "/* 自动生成：node tools/validate.mjs。不要手改；改 tools/review-tiers.json、reviews.json、site-config.json */\nwindow.SITE_META = " + JSON.stringify({ feedbackUrl: /^https:\/\//.test(fb) ? fb : "", review }) + ";\n";
   const f = path.join(root, "shared", "site-meta.js"), old = fs.existsSync(f) ? fs.readFileSync(f, "utf8") : "";
   if (old !== out) { fs.writeFileSync(f, out); warn("site", "已重新生成 shared/site-meta.js：请更新所有图谱 sw.js 的 V 版本号再发布"); }
+}
+// 生成 shared/search-index.js（合集首页的全站搜索；字段：图谱id, 知识点id, 标题, 英文名, 摘要, 分类名, 要点）
+{
+  const titles = Object.fromEntries(registry.map(r => [r.id, r.title]));
+  const out = "/* 自动生成：node tools/validate.mjs。不要手改。只含 live 图谱 */\nwindow.KG_SEARCH = " + JSON.stringify({ graphs: titles, rows: SEARCH }) + ";\n";
+  const f = path.join(root, "shared", "search-index.js"), old = fs.existsSync(f) ? fs.readFileSync(f, "utf8") : "";
+  if (old !== out) { fs.writeFileSync(f, out); console.log(`  已重新生成 shared/search-index.js（${SEARCH.length} 条）`); }
 }
 console.log(`\n${errors} 个错误, ${warns} 个提醒`);
 process.exit(errors ? 1 : 0);

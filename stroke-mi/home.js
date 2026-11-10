@@ -1,7 +1,7 @@
 /* 心梗·脑梗 专属首页（时间线、今天能做的5件事）。接口见 docs/ARCHITECTURE.md */
 (window.KG.plugins = window.KG.plugins || {}).home = function (ctx) {
 "use strict";
-const {$, esc, cc, ICON, store, toast, NODES, CATS, byId, catById, REVIEWED, META} = ctx;
+const {$, esc, cc, ICON, catIcon, store, toast, NODES, CATS, byId, catById, REVIEWED, META} = ctx;
 /* ---------- HOME ---------- */
 function renderHome(){
   const counts = {}; NODES.forEach(n => counts[n.c]=(counts[n.c]||0)+1);
@@ -32,7 +32,7 @@ function renderHome(){
 
   <h2>八大知识模块</h2>
   <div class="cat-grid">
-    ${CATS.map(c => `<a class="cat-tile" href="#/learn/${c.id}" ${cc(c.id)}><span class="ic" aria-hidden="true">${c.icon}</span><b>${c.t}</b><span>${counts[c.id]||0} 个知识点 · ${c.e}</span></a>`).join("")}
+    ${CATS.map(c => `<a class="cat-tile" href="#/learn/${c.id}" ${cc(c.id)}><span class="ic" aria-hidden="true">${catIcon(c)}</span><b>${c.t}</b><span>${counts[c.id]||0} 个知识点 · ${c.e}</span></a>`).join("")}
   </div>
 
   <h2>今天就能做的 5 件事</h2>

@@ -18,6 +18,16 @@ const ICON = {
   phone:'<svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z"/></svg>'
 };
 
+/* 线框图标（shared/icons.js）；分类用 ic 字段，没有时退回旧的 emoji icon */
+const IC = (name, cls) => window.KG_ICON ? window.KG_ICON(name, cls) : "";
+const catIcon = c => c.ic && window.KG_ICON ? IC(c.ic) : esc(c.icon || "");
+
+/* 学习路径：默认 = 分类顺序（NODES 的排列顺序）；META.path 可自定义。已读只存本机 localStorage，不上传 */
+const PATH = (Array.isArray(META.path) && META.path.length ? META.path.filter(id => byId[id]).concat(NODES.map(n => n.id).filter(id => !(META.path || []).includes(id))) : NODES.map(n => n.id));
+const readSet = () => { try { return new Set(JSON.parse(store.get("read:" + META.id) || "[]")); } catch(e){ return new Set(); } };
+function markRead(id){ const s = readSet(); s.add(id); store.set("read:" + META.id, JSON.stringify([...s])); }
+function remember(id){ const n = byId[id]; store.set("last", JSON.stringify({g: META.id, gt: META.title, id, t: n.t, at: Date.now()})); }
+
 /* incoming links: build bidirectional neighbour sets */
 const nbr = {};
 NODES.forEach(n => nbr[n.id] = new Set());
@@ -37,10 +47,20 @@ function siteFoot(){
   return `<div class="foot note site-foot">
     <p>本站内容依据所列指南整理，每条附出处；由 AI 辅助整理${(RV.A||[]).length ? "。急救、用药等重点条目尚未经医生署名审核，请以医生意见为准" : ""}。</p>
     ${SITE.feedbackUrl ? `<p><a href="${esc(SITE.feedbackUrl)}" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p>` : ""}
+    <p><a href="../">← 全部知识图谱</a></p>
   </div>`;
 }
+/* 首页“继续阅读”：本图谱里上次读到的地方 + 已读进度 */
+function continueCard(){
+  let last = null; try { last = JSON.parse(store.get("last") || "null"); } catch(e){}
+  const done = [...readSet()].filter(id => byId[id]).length;
+  if (last && last.g === META.id && byId[last.id]) {
+    return `<a class="cont" href="#/k/${esc(last.id)}">${IC("book")}<span class="tx"><small>继续阅读 · 已读 ${done}/${NODES.length}</small><b>${esc(byId[last.id].t)}</b></span>${ICON.chev}</a>`;
+  }
+  return `<a class="cont" href="#/k/${esc(PATH[0])}">${IC("book")}<span class="tx"><small>从第一条开始 · 共 ${NODES.length} 条，按分类顺序读</small><b>${esc(byId[PATH[0]].t)}</b></span>${ICON.chev}</a>`;
+}
 
-const ctx = {$, esc, cc, ICON, store, toast: m => toast(m), NODES, CATS, byId, catById, REVIEWED, META};
+const ctx = {$, esc, cc, ICON, IC, catIcon, store, toast: m => toast(m), NODES, CATS, byId, catById, REVIEWED, META};
 const home = PLUG.home ? PLUG.home(ctx) : null;
 const sos = PLUG.sos ? PLUG.sos(ctx) : null;
 function defaultHome(){
@@ -53,7 +73,7 @@ function defaultHome(){
   </div>
   <h2>${CATS.length} 大知识模块</h2>
   <div class="cat-grid">
-    ${CATS.map(c => `<a class="cat-tile" href="#/learn/${c.id}" ${cc(c.id)}><span class="ic" aria-hidden="true">${c.icon}</span><b>${c.t}</b><span>${counts[c.id]||0} 个知识点 · ${c.e}</span></a>`).join("")}
+    ${CATS.map(c => `<a class="cat-tile" href="#/learn/${c.id}" ${cc(c.id)}><span class="ic" aria-hidden="true">${catIcon(c)}</span><b>${c.t}</b><span>${counts[c.id]||0} 个知识点 · ${c.e}</span></a>`).join("")}
   </div>
   <div class="foot note">
     <p><b>免责声明：</b>本站仅用于健康科普，不能替代医生的诊断和治疗。用药请遵医嘱。</p>
@@ -116,10 +136,11 @@ function hl(text){ if(!learnQ) return esc(text); const i=text.toLowerCase().inde
 function renderLearnList(){
   const terms = learnQ.toLowerCase().split(/\s+/).filter(Boolean);
   const hits = NODES.filter(n => (learnCat==="all"||n.c===learnCat) && terms.every(t => HAY[n.id].includes(t)));
+  const RD = readSet();
   if (!hits.length) { $("#learnList").innerHTML = `<div class="empty">没有找到与“${esc(learnQ)}”相关的知识点。<br>试试“血压”“溶栓”“支架”。</div>`; return; }
   const html = CATS.filter(c => hits.some(n=>n.c===c.id)).map(c => `
     <div class="group-h" ${cc(c.id)}><i></i>${c.t}<span class="muted small" style="font-weight:500">· ${hits.filter(n=>n.c===c.id).length}</span></div>
-    <ul class="list">${hits.filter(n=>n.c===c.id).map(n=>`<li><a href="#/k/${n.id}"><div class="tx"><div class="tt">${hl(n.t)}</div><div class="ss">${hl(n.s)}</div></div>${ICON.chev}</a></li>`).join("")}</ul>`).join("");
+    <ul class="list">${hits.filter(n=>n.c===c.id).map(n=>`<li><a href="#/k/${n.id}"${RD.has(n.id)?' class="read"':""}><div class="tx"><div class="tt">${hl(n.t)}</div><div class="ss">${hl(n.s)}</div></div>${ICON.chev}</a></li>`).join("")}</ul>`).join("");
   $("#learnList").innerHTML = (learnQ?`<p class="muted small" style="margin:12px 2px 0">找到 ${hits.length} 个结果</p>`:"") + html;
 }
 
@@ -140,34 +161,55 @@ function renderDetail(id){
     videos.push(`<li><a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(zh)}" target="_blank" rel="noopener"><span class="k bili">B站</span><div><div class="tt">${esc(t)}</div><div class="src">哔哩哔哩搜索：${esc(zh)} · 建议优先选择医院、医生认证账号</div></div>${ICON.ext}</a></li>`);
     videos.push(`<li><a href="https://www.youtube.com/results?search_query=${encodeURIComponent(en)}" target="_blank" rel="noopener"><span class="k yt">YouTube</span><div><div class="tt">${esc(en)}</div><div class="src">YouTube搜索 · 建议选择 AHA、Mayo Clinic、NHS 等官方频道</div></div>${ICON.ext}</a></li>`);
   });
+  /* 可信度一行：出处数 · 核对日期 · 审核状态（A 级如实写“待医生审核”） */
+  const signed = isA(n.id) && (RV.signed || {})[n.id];
+  const status = !isA(n.id) ? `<span class="st">AI 辅助整理</span>` : signed ? `<span class="st ok">✓ 执业医师已审核</span>` : `<span class="st pend">待医生审核</span>`;
+  /* 何时立即就医（可选字段 w：[[文字, 出处]]；出处 = ref 序号（从 1 起）或 [标题, URL, 来源]）。属 A 级内容 */
+  const wSrc = s => { const r = typeof s === "number" ? n.ref[s-1] : s; return r && r[1] ? `<sup><a href="${esc(r[1])}" target="_blank" rel="noopener" title="${esc(r[0])}">[${typeof s === "number" ? s : "出处"}]</a></sup>` : ""; };
+  const when = (n.w||[]).length ? `<section class="when" id="d-when" aria-labelledby="d-when-h"><h2 id="d-when-h">${IC("alert")}出现以下情况，立即就医</h2>
+      <ul>${n.w.map(([t,s])=>`<li>${esc(t)}${wSrc(s)}</li>`).join("")}</ul>
+      ${sos ? `<a class="btn sos" href="#/sos">${ICON.phone.replace("<svg ",'<svg class="ico" ')}打开急救指引</a>` : `<a class="btn sos" href="#/sos">${ICON.phone.replace("<svg ",'<svg class="ico" ')}拨打当地急救电话</a>`}
+      ${signed ? "" : `<p class="pend">本段依据所列指南整理，尚未经医生署名审核；拿不准时按急症处理。</p>`}</section>` : "";
+  const secs = [n.n&&["d-nums","关键数字"], n.w&&n.w.length&&["d-when","何时就医"], ["d-expl","详细解释"], n.k&&["d-keys","要点"], n.calc&&["calc","自测"], n.m&&["d-myth","误区"], rel.length&&["d-rel","关联"], ["d-refs","出处"], videos.length&&["d-video","视频"]].filter(Boolean);
+  const pi = PATH.indexOf(id), pNext = byId[PATH[pi+1]], pPrev = byId[PATH[pi-1]], RD = readSet(), nRead = PATH.filter(x=>RD.has(x)).length;
   $("#v-detail").innerHTML = `
   <div class="d-head" ${cc(n.c)}>
-    <a class="badge" href="#/learn/${c.id}">${c.icon} ${c.t} · ${i+1}/${siblings.length}</a>
+    <a class="badge" href="#/learn/${c.id}">${catIcon(c)} ${c.t} · ${i+1}/${siblings.length}</a>
     <h2 class="d-title">${esc(n.t)}</h2>
     <p class="d-en">${esc(n.en)}</p>
+    <p class="trust"><button type="button" data-to="d-refs">${n.ref.length} 条权威出处</button><span>核对 ${esc(REVIEWED)}</span>${status}</p>
     <p class="d-lead">${esc(n.s)}</p>
   </div>
   ${reviewFlag(n.id)}
+  ${secs.length > 3 ? `<nav class="toc" aria-label="本页目录">${secs.map(([a,t])=>`<button type="button" data-to="${a}">${t}</button>`).join("")}</nav>` : ""}
   <div ${cc(n.c)}>
-  ${n.n ? `<h2>关键数字</h2><div class="nums">${n.n.map(([a,b])=>`<div class="num"><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join("")}</div>` : ""}
-  <h2>详细解释</h2><div class="prose">${n.d.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
-  ${n.k ? `<h2>要点</h2><div class="card"><ul class="keys">${n.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>` : ""}
+  ${n.n ? `<h2 id="d-nums">关键数字</h2><div class="nums">${n.n.map(([a,b])=>`<div class="num"><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join("")}</div>` : ""}
+  ${when}
+  <h2 id="d-expl">详细解释</h2><div class="prose">${n.d.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
+  ${n.k ? `<h2 id="d-keys">要点</h2><div class="card"><ul class="keys">${n.k.map(k=>`<li>${esc(k)}</li>`).join("")}</ul></div>` : ""}
   ${n.calc ? calcHTML(n) : ""}
-  ${n.m ? `<h2>常见误区</h2>${n.m.map(([q,a])=>`<div class="myth"><div class="q">${esc(q)}</div><div class="a">${esc(a)}</div></div>`).join("")}` : ""}
-  ${rel.length ? `<h2>关联知识</h2><div class="rel">${rel.map(r=>`<a href="#/k/${r.id}" ${cc(r.c)}><i></i>${esc(r.t)}</a>`).join("")}</div>
+  ${n.m ? `<h2 id="d-myth">常见误区</h2>${n.m.map(([q,a])=>`<div class="myth"><div class="q">${esc(q)}</div><div class="a">${esc(a)}</div></div>`).join("")}` : ""}
+  ${rel.length ? `<h2 id="d-rel">关联知识</h2><div class="rel">${rel.map(r=>`<a href="#/k/${r.id}" ${cc(r.c)}><i></i>${esc(r.t)}</a>`).join("")}</div>
      <p style="margin:10px 0 0"><a href="#/graph/${n.id}">在知识图谱中查看关系 →</a></p>` : ""}
-  <h2>权威资料</h2>
+  <h2 id="d-refs">权威资料</h2>
   <ul class="links">${n.ref.map(([t,u,s])=>{const [k,l]=refKind(u);return `<li><a href="${esc(u)}" target="_blank" rel="noopener"><span class="k ${k}">${l}</span><div><div class="tt">${esc(t)}</div><div class="src">${esc(s)} · ${esc(host(u))}</div></div>${ICON.ext}</a></li>`;}).join("")}</ul>
-  ${videos.length ? `<h2>视频讲解</h2><ul class="links">${videos.join("")}</ul>
+  ${videos.length ? `<h2 id="d-video">视频讲解</h2><ul class="links">${videos.join("")}</ul>
      <p class="note" style="margin-top:8px">视频链接指向官方页面或平台检索结果，以便始终看到最新内容。中国大陆用户建议使用B站。</p>` : ""}
-  <div class="pager">
-    ${prev?`<a href="#/k/${prev.id}"><small>‹ 上一条</small><span>${esc(prev.t)}</span></a>`:"<span></span>"}
-    ${next?`<a class="next" href="#/k/${next.id}"><small>下一条 ›</small><span>${esc(next.t)}</span></a>`:"<span></span>"}
+  <div class="done">
+    <p class="prog">学习进度：已读 ${nRead} / ${PATH.length}${RD.has(id) ? " · 本条已读" : ""}（只保存在本机）</p>
+    <div class="bar2"><i style="width:${Math.round(nRead*100/PATH.length)}%"></i></div>
+    <div class="row">
+      ${pPrev ? `<a class="btn ghost" href="#/k/${pPrev.id}">‹ 上一条</a>` : ""}
+      <a class="btn primary" id="doneBtn" href="${pNext ? "#/k/"+pNext.id : "#/learn"}">${pNext ? "读完了，下一条 ›" : "读完了，回到目录"}${pNext ? `<span class="nexttt">${esc(pNext.t)}</span>` : ""}</a>
+    </div>
   </div>
   <p class="note foot">本条内容核对于 ${REVIEWED}，仅供科普参考，不能替代医生面诊。</p>
   ${siteFoot()}
   </div>`;
   if (n.calc) bindCalc(n);
+  remember(id);
+  $("#doneBtn").addEventListener("click", () => markRead(id));
+  $("#v-detail").querySelectorAll("[data-to]").forEach(b => b.onclick = () => { const t = document.getElementById(b.dataset.to); if (t) window.scrollTo({top: t.getBoundingClientRect().top + scrollY - 70, behavior: "smooth"}); });
   document.title = n.t + " | " + META.title;
 }
 function calcHTML(n){
@@ -194,7 +236,7 @@ function bindCalc(n){
 /* ---------- GRAPH ---------- */
 let gMode = "ego", gStack = [];
 const keyLabel = k => k==="root" ? META.rootLabel : k.startsWith("c:") ? catById[k.slice(2)].t : byId[k.slice(2)].t;
-const keyColor = k => k==="root" ? "--sos" : k.startsWith("c:") ? catById[k.slice(2)].color : catById[byId[k.slice(2)].c].color;
+const keyColor = k => k==="root" ? "--accent" : k.startsWith("c:") ? catById[k.slice(2)].color : catById[byId[k.slice(2)].c].color;
 function egoNeighbours(k){
   if (k==="root") return CATS.map(c=>"c:"+c.id);
   if (k.startsWith("c:")) return ["root", ...NODES.filter(n=>n.c===k.slice(2)).map(n=>"n:"+n.id)];
@@ -225,11 +267,16 @@ function drawGraph(){
 function nodeSVG(k, x, y, r, isCenter){
   const lines = wrap(keyLabel(k), isCenter?7:6);
   const fs = isCenter?13:11;
-  const icon = k==="root" ? (META.rootIcon || "🫀") : k.startsWith("c:") ? catById[k.slice(2)].icon : "";
+  const P = window.KG_ICON_PATHS || {}, c0 = k.startsWith("c:") ? catById[k.slice(2)] : null;
+  const icName = k==="root" ? META.rootIc : c0 ? c0.ic : "";
+  const emoji = k==="root" ? (META.rootIcon || "🫀") : c0 ? c0.icon : "";
+  const sz = r*1.1, glyph = icName && P[icName]
+    ? `<g transform="translate(${(-sz/2).toFixed(1)},${(-sz/2).toFixed(1)}) scale(${(sz/24).toFixed(3)})" fill="none" stroke="var(--surface)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">${P[icName]}</g>`
+    : emoji ? `<text y="${r*0.36}" style="font-size:${r*0.95}px">${emoji}</text>` : `<circle r="${r*0.32}" fill="var(--surface)"/>`;
   return `<g class="g-node${isCenter?" center":""}" data-k="${k}" transform="translate(${x.toFixed(1)},${y.toFixed(1)})" tabindex="0" role="button" aria-label="${esc(keyLabel(k))}">
     <circle class="ring" r="${r+4}" fill="none" stroke="transparent"/>
     <circle r="${r}" fill="var(${keyColor(k)})" ${isCenter?"":`fill-opacity=".9"`}/>
-    ${icon?`<text y="${r*0.36}" style="font-size:${r*0.95}px">${icon}</text>`:`<circle r="${r*0.32}" fill="var(--surface)"/>`}
+    ${glyph}
     <text y="${r+fs+3}" style="font-size:${fs}px">${lines.map((l,i)=>`<tspan x="0" dy="${i?fs*1.2:0}">${esc(l)}</tspan>`).join("")}</text>
   </g>`;
 }
@@ -241,7 +288,7 @@ function drawEgo(){
   const crumbs = gStack.slice(-3).map(s=>`<button data-back="${s}">${esc(keyLabel(s).slice(0,8))}</button><span>›</span>`).join("");
   let center;
   if (k==="root") center = {t:META.title, s:"从"+CATS.length+"大模块出发，逐层探索。每个节点都可以展开它的关联知识。", href:"#/learn"};
-  else if (k.startsWith("c:")) { const c=catById[k.slice(2)]; center={t:c.icon+" "+c.t, s:`本模块共 ${N-1} 个知识点。点击节点查看它们之间的关系。`, href:"#/learn/"+c.id}; }
+  else if (k.startsWith("c:")) { const c=catById[k.slice(2)]; center={t:c.t, s:`本模块共 ${N-1} 个知识点。点击节点查看它们之间的关系。`, href:"#/learn/"+c.id}; }
   else { const n=byId[k.slice(2)]; center={t:n.t, s:n.s, href:"#/k/"+n.id}; }
   $("#gBody").innerHTML = `
    <div class="g-wrap g-ego">
@@ -317,6 +364,7 @@ function route(){
   else if (seg==="graph") { view="graph"; tab="graph"; title="知识图谱"; if(!$("#gTabs")) renderGraphShell(); if (arg && byId[arg]) { if (gCenter!=="n:"+arg) { gStack.push(gCenter); gCenter="n:"+arg; } gMode="ego"; $("#gTabs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-selected",x.dataset.m==="ego")); } drawGraph(); }
   else if (seg==="sos" && sos) { view="sos"; tab="sos"; title="一键急救"; sos.render(); $("#v-sos").insertAdjacentHTML("beforeend", reviewFlag("sos"));  /* 放页尾：不挡急救电话按钮 */ }
   if (view!=="sos" && sos) sos.leave();
+  if (view==="home") { const old = $("#v-home .cont"); if (old) old.outerHTML = continueCard(); }
   if (view!=="detail") document.title = view==="home" ? META.title : title+" | "+META.title;
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id==="v-"+view));
   document.querySelectorAll(".nav a").forEach(a => a.dataset.tab===tab ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
@@ -329,6 +377,7 @@ function route(){
 $("#backBtn").onclick = () => navDepth > 1 ? history.back() : (location.hash = "#/learn");
 window.addEventListener("hashchange", () => { navDepth++; route(); });
 (home || defaultHome)();
+{ const hero = $("#v-home .hero"); hero ? hero.insertAdjacentHTML("afterend", continueCard()) : $("#v-home").insertAdjacentHTML("afterbegin", continueCard()); }
 $("#v-home").insertAdjacentHTML("beforeend", siteFoot());
 route(); navDepth = 1;
 
