@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 为合集首页和每个已上线的图谱生成二维码（PNG + SVG）到 share/：
+// 为合集首页、每个已上线的图谱和反馈问卷生成二维码（PNG + SVG）到 share/：
 //   npm install        （只需一次，装二维码库）
 //   node tools/make-qr.mjs
 // 二维码里编码的是网址本身，网址不变二维码就永远有效。打印时用 SVG；发微信/朋友圈用 PNG。
@@ -9,6 +9,8 @@ const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..")
 const SITE = "https://jackyyhhxjyxn.github.io/heart-brain-kg/";
 const w = {}; vm.runInNewContext(fs.readFileSync(path.join(root, "registry.js"), "utf8"), { window: w });
 const items = [{ id: "hub", url: SITE }, ...w.REGISTRY.filter(r => r.status === "live").map(r => ({ id: r.id, url: `${SITE}${r.id}/` }))];
+// 反馈问卷二维码（链接来自 tools/site-config.json 的 feedbackUrl；留空则不生成）
+try { const fb = JSON.parse(fs.readFileSync(path.join(root, "tools", "site-config.json"), "utf8")).feedbackUrl; if (/^https:\/\//.test(fb || "")) items.push({ id: "feedback", url: fb }); } catch {}
 fs.mkdirSync(path.join(root, "share"), { recursive: true });
 for (const it of items) {
   const opt = { errorCorrectionLevel: "M", margin: 2, color: { dark: "#111111", light: "#ffffff" } };

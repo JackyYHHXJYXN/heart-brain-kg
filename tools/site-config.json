@@ -1,4 +1,4 @@
 {
   "_说明": "站点设置。feedbackUrl：腾讯问卷链接（https），留空则页面不显示反馈链接。改完运行 node tools/validate.mjs，它会重新生成 shared/site-meta.js。",
-  "feedbackUrl": ""
+  "feedbackUrl": "https://wj.qq.com/s2/28550440/6tdk/"
 }
