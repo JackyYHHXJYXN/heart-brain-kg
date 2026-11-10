@@ -3,5 +3,3 @@ node_modules/
 *.log
 private/
 
-# 2026-11-03：metabolism 未经审核，不进公开仓库（本地保留，校验照常）
-metabolism/
