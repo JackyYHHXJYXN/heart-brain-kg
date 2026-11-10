@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>心梗·脑梗知识图谱</title>
+<meta name="description" content="基于2023–2026年国际与中国最新指南的心肌梗死与脑卒中科普知识图谱：识别症状、院前急救、医院救治、二级预防，每个知识点附权威文献与视频。">
+<meta name="theme-color" content="#f6f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="心脑急救">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<!-- 社交分享卡片：如更换仓库名/用户名，请同步替换下列地址（见 README） -->
+<link rel="canonical" href="https://jackyyhhxjyxn.github.io/heart-brain-kg/stroke-mi/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="心梗·脑梗知识图谱">
+<meta property="og:title" content="心梗·脑梗知识图谱 — 早识别、快急救、防复发">
+<meta property="og:description" content="48个知识点，依据2023–2026国际与中国指南，附权威文献与视频。手机即开即用。">
+<meta property="og:url" content="https://jackyyhhxjyxn.github.io/heart-brain-kg/stroke-mi/">
+<meta property="og:image" content="https://jackyyhhxjyxn.github.io/heart-brain-kg/stroke-mi/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="心梗·脑梗知识图谱">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="心梗·脑梗知识图谱">
+<meta name="twitter:description" content="早识别、快急救、防复发。依据最新国际与中国指南。">
+<meta name="twitter:image" content="https://jackyyhhxjyxn.github.io/heart-brain-kg/stroke-mi/og.png">
+<meta itemprop="name" content="心梗·脑梗知识图谱">
+<meta itemprop="description" content="早识别、快急救、防复发。依据最新国际与中国指南。">
+<meta itemprop="image" content="https://jackyyhhxjyxn.github.io/heart-brain-kg/stroke-mi/og.png">
+<link rel="stylesheet" href="../shared/app.css">
+</head>
+<body>
+<div class="wx-thumb" aria-hidden="true"><img src="og.png" alt="" width="300" height="300"></div>
+
+<header class="bar" id="bar">
+  <button class="icon-btn back" id="backBtn" aria-label="返回"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <h1 id="barTitle">心梗·脑梗知识图谱</h1>
+  <button class="icon-btn" id="fsBtn" aria-label="调整字号"><svg viewBox="0 0 24 24"><path d="M4 18L9 6l5 12M5.6 14h6.8M15 18l3-7 3 7M15.9 16h4.2"/></svg></button>
+  <button class="icon-btn" id="themeBtn" aria-label="切换深浅色"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+  <button class="icon-btn" id="shareBtn" aria-label="分享"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M16 6l-4-4-4 4M12 2v14"/></svg></button>
+</header>
+
+<main id="main">
+  <section class="view" id="v-home" aria-label="首页"></section>
+  <section class="view" id="v-graph" aria-label="知识图谱"></section>
+  <section class="view" id="v-learn" aria-label="知识库"></section>
+  <section class="view" id="v-sos" aria-label="急救"></section>
+  <article class="view" id="v-detail" aria-live="polite"></article>
+</main>
+
+<nav class="nav" aria-label="主导航">
+  <a href="#/" data-tab="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>首页</a>
+  <a href="#/graph" data-tab="graph"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="18" r="2"/><path d="M10 10.5L6.5 7.3M14 10.5l3.5-3.2M10.3 13.8l-3 3.5M13.8 13.8l2.8 2.6"/></svg>图谱</a>
+  <a href="#/learn" data-tab="learn"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 5v16M8 7h7M8 11h7"/></svg>知识库</a>
+  <a href="#/sos" data-tab="sos" class="sos"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.3-9A5.3 5.3 0 0112 6.6 5.3 5.3 0 0121.3 12C19 16.6 12 21 12 21z"/><path d="M7 12h3l1.5-2.5L13 14l1.5-2H17"/></svg>急救</a>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<noscript><p style="padding:16px">请启用 JavaScript 以使用本知识图谱。</p></noscript>
+<script src="data.js"></script>
+<script src="home.js"></script>
+<script src="sos.js"></script>
+<script src="../shared/app.js"></script>
+</body>
+</html>
