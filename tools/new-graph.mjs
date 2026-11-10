@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 新建一个图谱骨架：
 //   node tools/new-graph.mjs <id> "<完整标题>" "<短名(≤6字)>" "<一句话简介>" 
-// 例： node tools/new-graph.mjs metabolism "新陈代谢知识图谱" "代谢" "糖、脂、尿酸与体重" 
+// 例： node tools/new-graph.mjs example "示例图谱" "示例" "示例说明" 
 // 会创建 <id>/ 目录、把 registry.js 里同 id 的条目改为 live（没有则追加），不会覆盖已存在的目录。
 import fs from "node:fs"; import path from "node:path";
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
