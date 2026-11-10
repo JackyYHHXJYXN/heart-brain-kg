@@ -31,11 +31,11 @@ function reviewFlag(id){
   if (!isA(id)) return "";
   const s = (RV.signed || {})[id];
   return s ? `<div class="rv ok" role="note">✓ 本条已由执业医师审核：${esc(s.by)}（${esc(s.on)}）</div>`
-           : `<div class="rv pend" role="note"><b>本条待执业医师审核。</b>内容涉及急救、用药或是否就医的判断，请以医生和急救调度员的指导为准；出现症状请立即呼叫急救。</div>`;
+           : `<div class="rv pend" role="note"><b>本条依据所列指南整理，每条附出处；由 AI 辅助整理，尚未经医生署名审核。</b>请以医生意见为准；出现症状请立即呼叫急救。</div>`;
 }
 function siteFoot(){
   return `<div class="foot note site-foot">
-    <p>本站内容由 AI 辅助、依据指南原文整理${(RV.A||[]).length ? "；标注“待执业医师审核”的条目尚未经医生审核" : ""}。</p>
+    <p>本站内容依据所列指南整理，每条附出处；由 AI 辅助整理${(RV.A||[]).length ? "。急救、用药等重点条目尚未经医生署名审核，请以医生意见为准" : ""}。</p>
     ${SITE.feedbackUrl ? `<p><a href="${esc(SITE.feedbackUrl)}" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p>` : ""}
   </div>`;
 }
