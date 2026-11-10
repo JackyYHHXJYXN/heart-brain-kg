@@ -1,0 +1,14 @@
+{
+  "_说明": "分级审核（2026-11-03 Jacky 批准）。A 级 = 读者可能直接据此行动、出错会伤人的内容：急救动作、用药与剂量、是否/何时就医、自评工具。A 级必须有执业医师签字（tools/reviews.json）才算审核完成。pages 是不在 NODES 里的专属页面（如 SOS 急救页）。allowPendingA=true 表示 Jacky 决定在找到医生前先上线（2026-11-03：先只做网站 + 微信转发），此时 A 级页面必须显示“待执业医师审核”标签；找到医生签完字后改回 false。",
+  "graphs": {
+    "stroke-mi": {
+      "allowPendingA": true,
+      "pages": ["sos"],
+      "A": ["sos", "call120", "aspirin", "cpr", "aid-dont", "onset", "mi-sx", "mi-atyp", "befast", "s120", "tia", "ich", "abcd2", "chads", "ivt", "evt", "dapt", "sec-ap", "af-oac", "lipid-tx", "cardio-metab", "extra"]
+    },
+    "metabolism": {
+      "allowPendingA": false,
+      "A": ["hypo", "dka", "gdm", "t1d", "dmdrug", "lipdrug"]
+    }
+  }
+}

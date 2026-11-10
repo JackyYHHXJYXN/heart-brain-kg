@@ -1,7 +1,7 @@
 :root{
   --bg:#f6f5f2; --surface:#ffffff; --surface-2:#efede8; --line:#e2dfd8;
   --ink:#1b1c1f; --ink-2:#4b4d53; --ink-3:#74767c;
-  --accent:#1f5fbf; --sos:#c8102e; --sos-ink:#fff; --sos-soft:#fdecee;
+  --accent:#1f5fbf; --sos:#c8102e; --sos-ink:#fff; --sos-soft:#fdecee; --warn:#8a4b00; --warn-soft:#fff3df; --ok:#1d6b38; --ok-soft:#e5f3ea;
   --ok:#1d7a4f; --warn:#a15c00; --bad:#b3261e;
   --c-base:#2f63c8; --c-risk:#a8650b; --c-sign:#c43d34; --c-aid:#b0236a;
   --c-mi:#6d4bd1; --c-st:#0f7f84; --c-prev:#2c7a46; --c-tool:#5d6470;
@@ -13,7 +13,7 @@
   :root:not([data-theme="light"]){
     --bg:#121316; --surface:#1c1d21; --surface-2:#25262b; --line:#33353b;
     --ink:#ecebe8; --ink-2:#b9b9bd; --ink-3:#8c8d93;
-    --accent:#7aa7ff; --sos:#ff4d5e; --sos-ink:#1a0003; --sos-soft:#3a1519;
+    --accent:#7aa7ff; --sos:#ff4d5e; --sos-ink:#1a0003; --sos-soft:#3a1519; --warn:#ffc46b; --warn-soft:#33260f; --ok:#79d39a; --ok-soft:#11301d;
     --ok:#5cc98f; --warn:#f0a845; --bad:#ff7a6e;
     --c-base:#7aa2ff; --c-risk:#e3a447; --c-sign:#ff7b6f; --c-aid:#f07ab3;
     --c-mi:#a991ff; --c-st:#4fc7cb; --c-prev:#6fcf8f; --c-tool:#a5abb5;
@@ -23,7 +23,7 @@
 :root[data-theme="dark"]{
   --bg:#121316; --surface:#1c1d21; --surface-2:#25262b; --line:#33353b;
   --ink:#ecebe8; --ink-2:#b9b9bd; --ink-3:#8c8d93;
-  --accent:#7aa7ff; --sos:#ff4d5e; --sos-ink:#1a0003; --sos-soft:#3a1519;
+  --accent:#7aa7ff; --sos:#ff4d5e; --sos-ink:#1a0003; --sos-soft:#3a1519; --warn:#ffc46b; --warn-soft:#33260f; --ok:#79d39a; --ok-soft:#11301d;
   --ok:#5cc98f; --warn:#f0a845; --bad:#ff7a6e;
   --c-base:#7aa2ff; --c-risk:#e3a447; --c-sign:#ff7b6f; --c-aid:#f07ab3;
   --c-mi:#a991ff; --c-st:#4fc7cb; --c-prev:#6fcf8f; --c-tool:#a5abb5;
@@ -245,3 +245,9 @@ mark{background:color-mix(in srgb,var(--c-risk) 30%,transparent);color:inherit;b
   .stats{grid-template-columns:repeat(4,1fr)}
   .cat-grid{grid-template-columns:repeat(4,1fr)}
 }
+
+/* 审核状态标签（shared/app.js reviewFlag） */
+.rv{margin:12px 0;padding:10px 12px;border-radius:12px;font-size:.86rem;line-height:1.55;border-left:4px solid}
+.rv.pend{background:var(--warn-soft);color:var(--warn);border-color:var(--warn)}
+.rv.ok{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+.site-foot a{color:var(--accent)}

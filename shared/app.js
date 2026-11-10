@@ -24,6 +24,22 @@ NODES.forEach(n => nbr[n.id] = new Set());
 NODES.forEach(n => (n.r||[]).forEach(r => { if (byId[r]) { nbr[n.id].add(r); nbr[r].add(n.id); } }));
 
 /* ---------- plugins: graph-specific home / sos pages (see docs/ARCHITECTURE.md) ---------- */
+/* ---------- 审核状态与反馈（shared/site-meta.js 由 node tools/validate.mjs 根据 tools/*.json 生成，不要手改） ---------- */
+const SITE = window.SITE_META || {}, RV = (SITE.review || {})[META.id] || {A: [], signed: {}};
+const isA = id => (RV.A || []).includes(id);
+function reviewFlag(id){
+  if (!isA(id)) return "";
+  const s = (RV.signed || {})[id];
+  return s ? `<div class="rv ok" role="note">✓ 本条已由执业医师审核：${esc(s.by)}（${esc(s.on)}）</div>`
+           : `<div class="rv pend" role="note"><b>本条待执业医师审核。</b>内容涉及急救、用药或是否就医的判断，请以医生和急救调度员的指导为准；出现症状请立即呼叫急救。</div>`;
+}
+function siteFoot(){
+  return `<div class="foot note site-foot">
+    <p>本站内容由 AI 辅助、依据指南原文整理${(RV.A||[]).length ? "；标注“待执业医师审核”的条目尚未经医生审核" : ""}。</p>
+    ${SITE.feedbackUrl ? `<p><a href="${esc(SITE.feedbackUrl)}" target="_blank" rel="noopener">发现错误或看不懂？点这里反馈 →</a></p>` : ""}
+  </div>`;
+}
+
 const ctx = {$, esc, cc, ICON, store, toast: m => toast(m), NODES, CATS, byId, catById, REVIEWED, META};
 const home = PLUG.home ? PLUG.home(ctx) : null;
 const sos = PLUG.sos ? PLUG.sos(ctx) : null;
@@ -131,6 +147,7 @@ function renderDetail(id){
     <p class="d-en">${esc(n.en)}</p>
     <p class="d-lead">${esc(n.s)}</p>
   </div>
+  ${reviewFlag(n.id)}
   <div ${cc(n.c)}>
   ${n.n ? `<h2>关键数字</h2><div class="nums">${n.n.map(([a,b])=>`<div class="num"><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join("")}</div>` : ""}
   <h2>详细解释</h2><div class="prose">${n.d.map(p=>`<p>${esc(p)}</p>`).join("")}</div>
@@ -148,6 +165,7 @@ function renderDetail(id){
     ${next?`<a class="next" href="#/k/${next.id}"><small>下一条 ›</small><span>${esc(next.t)}</span></a>`:"<span></span>"}
   </div>
   <p class="note foot">本条内容核对于 ${REVIEWED}，仅供科普参考，不能替代医生面诊。</p>
+  ${siteFoot()}
   </div>`;
   if (n.calc) bindCalc(n);
   document.title = n.t + " | " + META.title;
@@ -207,7 +225,7 @@ function drawGraph(){
 function nodeSVG(k, x, y, r, isCenter){
   const lines = wrap(keyLabel(k), isCenter?7:6);
   const fs = isCenter?13:11;
-  const icon = k==="root" ? "🫀" : k.startsWith("c:") ? catById[k.slice(2)].icon : "";
+  const icon = k==="root" ? (META.rootIcon || "🫀") : k.startsWith("c:") ? catById[k.slice(2)].icon : "";
   return `<g class="g-node${isCenter?" center":""}" data-k="${k}" transform="translate(${x.toFixed(1)},${y.toFixed(1)})" tabindex="0" role="button" aria-label="${esc(keyLabel(k))}">
     <circle class="ring" r="${r+4}" fill="none" stroke="transparent"/>
     <circle r="${r}" fill="var(${keyColor(k)})" ${isCenter?"":`fill-opacity=".9"`}/>
@@ -297,7 +315,7 @@ function route(){
   if (seg==="k" && byId[arg]) { view="detail"; renderDetail(arg); title=catById[byId[arg].c].t; tab="learn"; }
   else if (seg==="learn") { view="learn"; tab="learn"; title="知识库"; if(!$("#q")) renderLearnShell(); setCat(arg||"all"); }
   else if (seg==="graph") { view="graph"; tab="graph"; title="知识图谱"; if(!$("#gTabs")) renderGraphShell(); if (arg && byId[arg]) { if (gCenter!=="n:"+arg) { gStack.push(gCenter); gCenter="n:"+arg; } gMode="ego"; $("#gTabs").querySelectorAll("button").forEach(x=>x.setAttribute("aria-selected",x.dataset.m==="ego")); } drawGraph(); }
-  else if (seg==="sos" && sos) { view="sos"; tab="sos"; title="一键急救"; sos.render(); }
+  else if (seg==="sos" && sos) { view="sos"; tab="sos"; title="一键急救"; sos.render(); $("#v-sos").insertAdjacentHTML("beforeend", reviewFlag("sos"));  /* 放页尾：不挡急救电话按钮 */ }
   if (view!=="sos" && sos) sos.leave();
   if (view!=="detail") document.title = view==="home" ? META.title : title+" | "+META.title;
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id==="v-"+view));
@@ -311,6 +329,7 @@ function route(){
 $("#backBtn").onclick = () => navDepth > 1 ? history.back() : (location.hash = "#/learn");
 window.addEventListener("hashchange", () => { navDepth++; route(); });
 (home || defaultHome)();
+$("#v-home").insertAdjacentHTML("beforeend", siteFoot());
 route(); navDepth = 1;
 
 if ("serviceWorker" in navigator && location.protocol === "https:") {

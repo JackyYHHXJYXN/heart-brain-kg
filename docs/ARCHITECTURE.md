@@ -13,7 +13,7 @@ sos.js  (可选)   → 注册专属急救页 window.KG.plugins.sos
 ```
 
 ## data.js 格式
-- `META`：`id`（必须等于目录名）、`title`、`rootLabel`（关系图中心名）、`tagline`、`eyebrow`
+- `META`：`id`（必须等于目录名）、`title`、`rootLabel`（关系图中心名）、`rootIcon`（可选，关系图中心图标，默认 🫀）、`tagline`、`eyebrow`
 - `CATS`：`{ id, t, e, icon, color }`，`color` 是 CSS 变量名：`--c-base --c-risk --c-sign --c-aid --c-mi --c-st --c-prev --c-tool`（要新颜色在 `shared/app.css` 的 `:root` 里加变量，亮暗两套）
 - `NODES`（知识点）：
   - `id` 唯一，用于链接 `#/k/<id>`；**发布后不要改 id**（会破坏已分享的链接）

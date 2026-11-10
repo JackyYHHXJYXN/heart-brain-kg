@@ -46,7 +46,7 @@ h1{font-size:1.6rem;margin:12px 0 4px}
   /* 兼容旧分享链接：根目录 #/k/ivt 等一律跳到心梗·脑梗图谱 */
   if (/^#\/./.test(location.hash)) { location.replace("stroke-mi/" + location.hash); return; }
   var esc = function(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); };
-  document.getElementById("g").innerHTML = window.REGISTRY.map(function(r){
+  document.getElementById("g").innerHTML = window.REGISTRY.filter(function(r){ return r.status !== "draft"; }).map(function(r){
     var live = r.status === "live";
     return '<a class="card' + (live ? "" : " soon") + '" style="--c:' + esc(r.color) + '"' + (live ? ' href="' + esc(r.id) + '/"' : "") + '>' +
       '<span class="ic" aria-hidden="true">' + r.icon + '</span><span><b>' + esc(r.title) + (live ? "" : '<span class="tag">筹备中</span>') + '</b><span class="d">' + esc(r.desc) + '</span></span></a>';
