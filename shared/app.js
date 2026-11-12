@@ -168,7 +168,7 @@ function renderDetail(id){
   const wSrc = s => { const r = typeof s === "number" ? n.ref[s-1] : s; return r && r[1] ? `<sup><a href="${esc(r[1])}" target="_blank" rel="noopener" title="${esc(r[0])}">[${typeof s === "number" ? s : "出处"}]</a></sup>` : ""; };
   const when = (n.w||[]).length ? `<section class="when" id="d-when" aria-labelledby="d-when-h"><h2 id="d-when-h">${IC("alert")}出现以下情况，立即就医</h2>
       <ul>${n.w.map(([t,s])=>`<li>${esc(t)}${wSrc(s)}</li>`).join("")}</ul>
-      ${sos ? `<a class="btn sos" href="#/sos">${ICON.phone.replace("<svg ",'<svg class="ico" ')}打开急救指引</a>` : `<a class="btn sos" href="#/sos">${ICON.phone.replace("<svg ",'<svg class="ico" ')}拨打当地急救电话</a>`}
+      ${sos ? `<a class="btn sos" href="#/sos">${ICON.phone.replace("<svg ",'<svg class="ico" ')}打开急救指引</a>` : `<a class="btn sos" href="../stroke-mi/#/sos">拨打当地急救电话</a>`}
       ${signed ? "" : `<p class="pend">本段依据所列指南整理，尚未经医生署名审核；拿不准时按急症处理。</p>`}</section>` : "";
   const secs = [n.n&&["d-nums","关键数字"], n.w&&n.w.length&&["d-when","何时就医"], ["d-expl","详细解释"], n.k&&["d-keys","要点"], n.calc&&["calc","自测"], n.m&&["d-myth","误区"], rel.length&&["d-rel","关联"], ["d-refs","出处"], videos.length&&["d-video","视频"]].filter(Boolean);
   const pi = PATH.indexOf(id), pNext = byId[PATH[pi+1]], pPrev = byId[PATH[pi-1]], RD = readSet(), nRead = PATH.filter(x=>RD.has(x)).length;
