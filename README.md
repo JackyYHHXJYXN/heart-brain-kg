@@ -18,9 +18,8 @@
 
 
 - 在线：https://jackyyhhxjyxn.github.io/heart-brain-kg/
-- 新增图谱：`node tools/new-graph.mjs <id> "<标题>" "<短名>" "<简介>"`，详见 `docs/ADDING_A_GRAPH.md`
+- 新增图谱：`node tools/new-graph.mjs <id> "<标题>" "<短名>" "<简介>"`
 - 校验：`node tools/validate.mjs`
-- 二维码与访问统计：`docs/SHARING_AND_ANALYTICS.md`
 - 本地预览：`python3 -m http.server 8765`，然后打开 http://localhost:8765/
 
 仅供健康科普，不能替代医生诊疗。
